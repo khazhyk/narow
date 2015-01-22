@@ -24,18 +24,17 @@ public class StateNode {
 	
 	//generate tree of certain depth
 	public void makeMoveTree(int level){
-		
 		//make all "width" possible moves and determine if they are legal
-		for (int w = 0; w < this.current.width; w++){
+		
+		for (int w = 0; w < this.current.board.length; w++){
 			if (this.current.board[0][w] == 0){
-				nextState.add(new StateNode(current.nextBoard(w, 1, player), !player));
-				System.out.println(Arrays.deepToString(current.nextBoard(w, 1, player).board));
+				nextState.add(new StateNode(this.current.nextBoard(w, 1, this.player), !this.player));
 			}
 		}
-			
-		if (level > 1)
+		if (level > 1){
 			for (int i = 0; i < nextState.size(); i++)
 				nextState.get(i).makeMoveTree(level-1);
+		}
 	}
 	
 	public int calcMiniMax(){
