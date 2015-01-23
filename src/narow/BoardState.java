@@ -3,20 +3,24 @@ package narow;
 import java.util.Arrays;
 
 public class BoardState{
-	
-	int[][] board;
+	public enum PlaceState {
+		Empty,
+		Player1,
+		Player2
+	}
+	PlaceState[][] board;
 	int height;
 	int width;
 	int hvalue;
 	
 	public BoardState(int height, int width){
-		this.board = new int[height][width];
+		this.board = new PlaceState[height][width];
 		this.height = height;
 		this.width = width;
 		this.hvalue = -1;
 	}
 	
-	public BoardState(int[][] nboard){
+	public BoardState(PlaceState[][] nboard){
 		this.board = nboard.clone();
 		for (int i = 0; i < nboard.length; i++)
 			this.board[i] = nboard[i].clone();
@@ -26,39 +30,37 @@ public class BoardState{
 		this.hvalue = -1;
 	}
 	
-	public int[][] updateBoard(int column, int action, Boolean player){
+	public PlaceState[][] updateBoard(int column, int action, PlaceState player){
 		//System.out.print(this.board[this.height][column]);
 //		if (this.board[this.height-1][column] == 0)
 //			this.board[this.height-1][column] = player;
 		for (int i=0; i<this.board[0].length-1; i++){
-			if (this.board[i+1][column] !=0){
-				if (player) {this.board[i][column] = 2;} 
-				else {this.board[i][column] = 1;};
+			if (this.board[i+1][column] != PlaceState.Empty){
+				if (player == PlaceState.Player1) {this.board[i][column] = PlaceState.Player1;} 
+				else {this.board[i][column] = PlaceState.Player2;};
 					break;}
 			if (i == this.board[0].length-2)
-				if (player) {this.board[i][column] = 2;} 
-				else {this.board[i][column] = 1;};
+				if (player == PlaceState.Player1) {this.board[i][column] = PlaceState.Player1;} 
+				else {this.board[i][column] = PlaceState.Player2;};
 		}
 		return this.board;
 		
 	}
 	
-	public BoardState nextBoard(int column, int action, Boolean player){
+	public BoardState nextBoard(int column, int action, PlaceState player){
 		BoardState nextB = new BoardState(this.board);
-		int[] test = this.board[height-1];
-		int[] test2 = this.board[column];
 		//System.err.print(nextB.board[this.height-1][column]);
 		//System.err.println(this.height);
-		if (this.board[this.height-1][column] == 0){
+		if (this.board[this.height-1][column] == PlaceState.Empty){
 			//System.err.print("yes");
-			if (player) {nextB.board[this.height-1][column] = 2;} 
-			else {nextB.board[this.height-1][column] = 1;}
+			if (player == PlaceState.Player1) {nextB.board[this.height-1][column] = PlaceState.Player1;} 
+			else {nextB.board[this.height-1][column] = PlaceState.Player2;}
 		}
 		for (int i=0; i<this.height-1; i++){
-			if (this.board[i+1][column] !=0){
+			if (this.board[i+1][column] !=PlaceState.Empty){
 				//System.err.print("yes");
-				if (player) {nextB.board[i][column] = 2;} 
-				else {nextB.board[i][column] = 1;}
+				if (player == PlaceState.Player1) {nextB.board[i][column] = PlaceState.Player1;} 
+				else {nextB.board[i][column] =PlaceState.Player2;}
 				break;}
 		}
 		System.err.print(player);

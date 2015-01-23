@@ -26,7 +26,7 @@ public class StateNode {
 	public void makeMoveTree(int level){
 		//make all "width" possible moves and determine if they are legal
 		for (int w = 0; w < this.current.width-1; w++){
-			if (this.current.board[0][w] == 0){
+			if (this.current.board[0][w] == BoardState.PlaceState.Empty){
 				nextState.add(new StateNode(this.current.nextBoard(w, 1, this.player), !this.player));
 			}
 		}
