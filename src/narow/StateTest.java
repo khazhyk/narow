@@ -11,11 +11,17 @@ public class StateTest {
 	@Test
 	public void testmake() {
 		BoardState teststate = new BoardState(6,7);
+		org.junit.Assert.assertEquals(teststate.height, 6);
+		org.junit.Assert.assertEquals(teststate.width, 7); 
 		//System.out.println(Arrays.deepToString(teststate.board));
 		//teststate.nextBoard(3,1,new Boolean(true));
 		//System.out.println(Arrays.deepToString(teststate.board));
 		//teststate.nextBoard(3,1,new Boolean(false));
 		//System.out.println(Arrays.deepToString(teststate.board));
+		int[][] testboardarray = new int[6][7];
+		BoardState teststate2 = new BoardState(testboardarray);
+		org.junit.Assert.assertEquals(teststate2.height, 6);
+		org.junit.Assert.assertEquals(teststate2.width, 7); 
 	}
 	
 	StateNode testSN1 = new StateNode(2);
@@ -89,7 +95,15 @@ public class StateTest {
 		testState1.makeMoveTree(2);
 	}
 	
+	BoardState testboard2 = new BoardState(4,5);
+	StateNode testState2 = new StateNode(testboard2, new Boolean(true));
+	
 	@Test
+	public void textmakeboardtree2(){
+		testState2.makeMoveTree(4);
+	}
+	
+	/*@Test
 	public void testTree1(){
 		testState1.makeMoveTree(1);
 		assertEquals(testState1.nextState.size(),3);
@@ -101,6 +115,6 @@ public class StateTest {
 		testState1.makeMoveTree(2);
 		assertEquals(testState1.nextState.size(),3);
 		assertEquals(testState1.nextState.get(0).nextState.size(),3);
-	}
+	}*/
 
 }

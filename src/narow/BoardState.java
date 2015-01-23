@@ -7,11 +7,13 @@ public class BoardState{
 	int[][] board;
 	int height;
 	int width;
+	int hvalue;
 	
 	public BoardState(int height, int width){
 		this.board = new int[height][width];
 		this.height = height;
 		this.width = width;
+		this.hvalue = -1;
 	}
 	
 	public BoardState(int[][] nboard){
@@ -21,6 +23,7 @@ public class BoardState{
 		//this.board = nboard.clone();
 		this.height = board.length;
 		this.width = board[0].length;
+		this.hvalue = -1;
 	}
 	
 	public int[][] updateBoard(int column, int action, Boolean player){
@@ -49,18 +52,23 @@ public class BoardState{
 		if (this.board[this.height-1][column] == 0){
 			//System.err.print("yes");
 			if (player) {nextB.board[this.height-1][column] = 2;} 
-			else {nextB.board[this.board[0].length-1][column] = 1;}
+			else {nextB.board[this.height-1][column] = 1;}
 		}
-		for (int i=0; i<this.board[0].length-1; i++){
+		for (int i=0; i<this.height-1; i++){
 			if (this.board[i+1][column] !=0){
 				//System.err.print("yes");
 				if (player) {nextB.board[i][column] = 2;} 
 				else {nextB.board[i][column] = 1;}
 				break;}
 		}
-		//System.err.print(player);
-		//System.err.println(Arrays.deepToString(nextB.board));
+		System.err.print(player);
+		System.err.println(Arrays.deepToString(nextB.board));
 		return nextB;
+	}
+	
+	public Integer calcHValue(){
+		this.hvalue = 1; // replace with actual hvalue based on h-function
+		return this.hvalue;
 	}
 
 }

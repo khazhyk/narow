@@ -25,8 +25,7 @@ public class StateNode {
 	//generate tree of certain depth
 	public void makeMoveTree(int level){
 		//make all "width" possible moves and determine if they are legal
-		
-		for (int w = 0; w < this.current.board.length; w++){
+		for (int w = 0; w < this.current.width-1; w++){
 			if (this.current.board[0][w] == 0){
 				nextState.add(new StateNode(this.current.nextBoard(w, 1, this.player), !this.player));
 			}
@@ -71,7 +70,7 @@ public class StateNode {
 		this.minimaxscore = value;
 	}
 	
-	// when backing up the tree
+	/*// when backing up the tree
 	public void setMinimax(){
 		if (player){
 			StateNode bestMove = nextState.get(0);
@@ -93,6 +92,6 @@ public class StateNode {
 				}
 			}
 		}
-	}
+	}*/
 	
 }
