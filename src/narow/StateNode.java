@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import narow.BoardState.Action;
-
 public class StateNode {
 	
 	BoardState current;
@@ -28,7 +26,7 @@ public class StateNode {
 	public void makeMoveTree(int level){
 		//make all "width" possible moves and determine if they are legal
 		for (int w = 0; w < this.current.width-1; w++){
-			if (this.current.board[0][w] == BoardState.PlaceState.Empty){
+			if (this.current.board[0][w] == PlaceState.Empty){
 				nextState.add(new StateNode(this.current.nextBoard(w, Action.Place, this.player), !this.player));
 			}
 		}

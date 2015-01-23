@@ -1,19 +1,6 @@
 package narow;
 
-import java.util.Arrays;
-
 public class BoardState{
-	public enum PlaceState {
-		Empty,
-		Player1,
-		Player2
-	}
-	
-	public enum Action {
-	    PopOut,
-	    Place
-	}
-	
 	PlaceState[][] board;
 	int height;
 	int width;
