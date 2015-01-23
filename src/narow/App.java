@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 
 class App {
 	public static void main(String[] args) throws IOException {
-		Player player = new Player();
+		AIPlayer player = new AIPlayer();
 		String inLine = "";
 		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 		
