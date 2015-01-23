@@ -88,7 +88,7 @@ public class BoardState{
     	            case ONE:
     	            case TWO:
     	                if (lastP == Player.NONE || lastP == board[x][y]) numInRow++;
-                        else numInRow = 0;
+                        else numInRow = 1;
     	                break;
 	            }
 	            lastP = board[x][y];
