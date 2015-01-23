@@ -8,69 +8,63 @@ public class BoardState{
 		Player1,
 		Player2
 	}
+	
+	public enum Action {
+	    PopOut,
+	    Place
+	}
+	
 	PlaceState[][] board;
 	int height;
 	int width;
-	int hvalue;
 	
+	/**
+	 * Creates a blank board of given width and height
+	 * @param height
+	 * @param width
+	 */
 	public BoardState(int height, int width){
 		this.board = new PlaceState[height][width];
 		this.height = height;
 		this.width = width;
-		this.hvalue = -1;
 	}
 	
+	/**
+	 * Initializes board to the given 2d array. The array should be the same size for all entries
+	 * @param nboard
+	 */
 	public BoardState(PlaceState[][] nboard){
 		this.board = nboard.clone();
 		for (int i = 0; i < nboard.length; i++)
 			this.board[i] = nboard[i].clone();
-		//this.board = nboard.clone();
+
 		this.height = board.length;
 		this.width = board[0].length;
-		this.hvalue = -1;
 	}
-	
-	public PlaceState[][] updateBoard(int column, int action, PlaceState player){
-		//System.out.print(this.board[this.height][column]);
-//		if (this.board[this.height-1][column] == 0)
-//			this.board[this.height-1][column] = player;
-		for (int i=0; i<this.board[0].length-1; i++){
-			if (this.board[i+1][column] != PlaceState.Empty){
-				if (player == PlaceState.Player1) {this.board[i][column] = PlaceState.Player1;} 
-				else {this.board[i][column] = PlaceState.Player2;};
-					break;}
-			if (i == this.board[0].length-2)
-				if (player == PlaceState.Player1) {this.board[i][column] = PlaceState.Player1;} 
-				else {this.board[i][column] = PlaceState.Player2;};
-		}
-		return this.board;
-		
-	}
-	
-	public BoardState nextBoard(int column, int action, PlaceState player){
+
+	/**
+	 * Get the next board
+	 * @param column
+	 * @param action
+	 * @param player
+	 * @return
+	 */
+	public BoardState nextBoard(int column, Action action, boolean player){
 		BoardState nextB = new BoardState(this.board);
 		//System.err.print(nextB.board[this.height-1][column]);
 		//System.err.println(this.height);
 		if (this.board[this.height-1][column] == PlaceState.Empty){
 			//System.err.print("yes");
-			if (player == PlaceState.Player1) {nextB.board[this.height-1][column] = PlaceState.Player1;} 
+			if (player) {nextB.board[this.height-1][column] = PlaceState.Player1;} 
 			else {nextB.board[this.height-1][column] = PlaceState.Player2;}
 		}
 		for (int i=0; i<this.height-1; i++){
 			if (this.board[i+1][column] !=PlaceState.Empty){
 				//System.err.print("yes");
-				if (player == PlaceState.Player1) {nextB.board[i][column] = PlaceState.Player1;} 
+				if (player) {nextB.board[i][column] = PlaceState.Player1;} 
 				else {nextB.board[i][column] =PlaceState.Player2;}
 				break;}
 		}
-		System.err.print(player);
-		System.err.println(Arrays.deepToString(nextB.board));
 		return nextB;
 	}
-	
-	public Integer calcHValue(){
-		this.hvalue = 1; // replace with actual hvalue based on h-function
-		return this.hvalue;
-	}
-
 }
