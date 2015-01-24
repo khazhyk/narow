@@ -75,11 +75,16 @@ public class BoardState{
 	 * @return
 	 */
 	public int traverse(Config c) {
-	    // horizontal, vertical, /, \
+	    // horizontal, vertical, \, /
 	    int numInRow = 0;
+	    int widthHeightDiff = Math.abs(width - height);
+	    
 	    Player lastP = Player.NONE;
 	    
+	    // Horizontal Test
 	    for (int x = 0; x < height; x++) {
+	        lastP = Player.NONE; // Beginning of a row
+	        numInRow = 0;
 	        for (int y = 0; y < width; y++) {
 	            switch (board[x][y]) {
     	            case NONE:
@@ -99,6 +104,94 @@ public class BoardState{
 	            }
 	        }
 	    }
+	    
+	    // Vertical Test
+	    for (int y = 0; y < width; y++) {
+	        lastP = Player.NONE; // Beginning of a col
+	        numInRow = 0;
+	        vert:
+	        for (int x = height - 1; x >= 0; x--) { // go from bottom to top
+	            switch (board[x][y]) {
+                    case NONE:
+                        break vert; // You can't have a piece on top of nothing. :)
+                    case ONE:
+                    case TWO:
+                        if (lastP == Player.NONE || lastP == board[x][y]) numInRow++;
+                        break;
+	            }
+	            lastP = board[x][y];
+            
+	            // FINAL STATE
+	            if (numInRow >= c.arow) {
+	                return (lastP == Player.ONE) ? Integer.MAX_VALUE : Integer.MIN_VALUE; 
+	            }
+	        }
+	    }
+	    
+	    // Diagonal \ Test
+	    /*
+	     * 0,0 0,1 0,2 0,3
+	     * 1,0 1,1 1,2 1,3
+	     * 2,0 2,1 2,2 2,3
+	     * 
+	     * for n = 2, test starting at 1,0; 0,0; 0,1; 0,2
+	     * 
+	     * Start at x=(height - n + 1), go until 0,0, then go to y=(width - n + 1)
+	     */
+	    
+	    // Going up to 0,0
+	    for (int i = height - c.arow; i> 0; i--) {
+	        lastP = Player.NONE;
+	        numInRow = 0;
+	        for (int x = 0; x < height - i; x++) {
+	            switch (board[x+i][x]) {
+	            case NONE:
+	                numInRow = 0;
+	                break;
+	            case ONE:
+	            case TWO:
+                    if (lastP == Player.NONE || lastP == board[x+i][x]) numInRow++;
+                    else numInRow = 1;
+	                break;
+	            }
+	            lastP = board[x+i][x];
+	            
+                // FINAL STATE
+                if (numInRow >= c.arow) {
+                    return (lastP == Player.ONE) ? Integer.MAX_VALUE : Integer.MIN_VALUE; 
+                }
+	        }
+	    }
+	    
+	    // Going Right from 0,0
+	    for (int i = 0; i <= width - c.arow; i++) {
+            lastP = Player.NONE;
+            numInRow = 0;
+            
+            // Diag \
+            for (int x = 0; x < ((i < widthHeightDiff) ? height : width) - i; x++) {
+                switch (board[x][x+i]) {
+                case NONE:
+                    numInRow = 0;
+                    break;
+                case ONE:
+                case TWO:
+                    if (lastP == Player.NONE || lastP == board[x][x+i]) numInRow++;
+                    else numInRow = 1;
+                    break;
+                }
+                lastP = board[x][x+i];
+                
+                // FINAL STATE
+                if (numInRow >= c.arow) {
+                    return (lastP == Player.ONE) ? Integer.MAX_VALUE : Integer.MIN_VALUE; 
+                }
+            }
+        }
+	    
+	    // Diagonal / Test
+     
+	    // SOON
 	    return 0;
 	}
 	
