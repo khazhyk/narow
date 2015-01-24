@@ -10,6 +10,8 @@ public class StateNode {
 	Boolean player; // min (1) or max (0)
 	int minimaxscore;
 	ArrayList <StateNode> nextState;
+	Config c;
+	int nextMove;
 	
 	public StateNode(BoardState state, Boolean player) {
 		this.current = state;
@@ -22,76 +24,46 @@ public class StateNode {
 		this.nextState = new ArrayList<StateNode>();
 	}
 	
-	//generate tree of certain depth
-	public void makeMoveTree(int level){
-		//make all "width" possible moves and determine if they are legal
-		for (int w = 0; w < this.current.width-1; w++){
-			if (this.current.board[0][w] == Player.NONE){
-				nextState.add(new StateNode(this.current.nextBoard(w, Action.Place, this.player), !this.player));
+	
+	/**
+	 * Find the best move to make using a given number of levels to search. Saves bestmove to the object
+	 * @param levels
+	 * @return minimaxscore
+	 */
+	public Integer Minimax(int level){
+		if (level == 1){//If node is at the lowest level of searching, just return hvalue
+			return current.hval();
+		}
+		int max = 0;
+		int min = 5;
+		for (int w = 0; w<this.current.width; w++){//try dropping a token in each column
+			if (this.player){//for player 1, find max of the next nodes
+				//Find the minimax value of the next statenode if the token is dropped in column w
+				int next = new StateNode(this.current.nextBoard(w, Action.Place, this.player), !player).Minimax(level-1);
+				//if value of "next" is better than the last best found move, this is new max
+				if (next > max){
+					max = next;
+					this.nextMove = w;
+					this.minimaxscore = max;
+				}
+			}
+			else{//if player 2 find min of next nodes
+				int next = new StateNode(this.current.nextBoard(w, Action.Place, this.player), !player).Minimax(level-1);
+				if (next < min){
+					min = next;
+					this.nextMove = w;
+					this.minimaxscore = min;
+				}
 			}
 		}
-		if (level > 1){
-			for (int i = 0; i < nextState.size(); i++)
-				nextState.get(i).makeMoveTree(level-1);
-		}
+		//return the minimax score of the node
+		return minimaxscore;
 	}
 	
-	public int calcMiniMax(){
-		if (!nextState.isEmpty())
-			if (player){
-				int maxVal = nextState.get(0).calcMiniMax();
-				StateNode bestMove = nextState.get(0);
-				this.setMMScore(maxVal);
-				for (int i = 0; i < nextState.size(); i++){
-					if (nextState.get(i).calcMiniMax() > maxVal){
-						bestMove = nextState.get(i);
-						maxVal = bestMove.calcMiniMax();
-						this.setMMScore(maxVal);
-					}
-				}
-			}
-			else{	// player2 (min or 1)
-				int minVal = nextState.get(0).calcMiniMax();
-				StateNode bestMove = nextState.get(0);
-				this.setMMScore(minVal);
-				for (int i = 0; i < nextState.size(); i++){
-					if (nextState.get(i).calcMiniMax() < minVal){
-						bestMove = nextState.get(i);
-						minVal = bestMove.calcMiniMax();
-						this.setMMScore(minVal);
-					}
-				}
-				
-			}
-		return this.minimaxscore;
-	}
+	
 	
 	public void setMMScore(int value){
 		this.minimaxscore = value;
 	}
-	
-	/*// when backing up the tree
-	public void setMinimax(){
-		if (player){
-			StateNode bestMove = nextState.get(0);
-			int maxVal = bestMove.minimaxscore;
-			for (int i = 0; i < nextState.size(); i++){
-				if (nextState.get(i).minimaxscore > maxVal){
-					bestMove = nextState.get(i);
-					maxVal = bestMove.minimaxscore;
-				}
-			}
-		}
-		else{	// player2 (min or 1)
-			StateNode bestMove = nextState.get(0);
-			int minVal = bestMove.minimaxscore;
-			for (int i = 0; i < nextState.size(); i++){
-				if (nextState.get(i).minimaxscore < minVal){
-					bestMove = nextState.get(i);
-					minVal = bestMove.minimaxscore;
-				}
-			}
-		}
-	}*/
 	
 }

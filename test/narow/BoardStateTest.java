@@ -77,7 +77,7 @@ public class BoardStateTest {
                 );
         
         BoardState board2 = new BoardState(
-                "0 0 0 0 0 0 0",
+                "0 0 0 2 0 0 0",
                 "0 0 0 1 2 1 0",
                 "0 0 0 2 1 2 1",
                 "0 0 0 1 2 1 2",
@@ -90,5 +90,27 @@ public class BoardStateTest {
         
         assertEquals(Integer.MIN_VALUE, board.traverse(c));
         assertEquals(Integer.MIN_VALUE, board2.traverse(c));
+    }
+    
+    @Test
+    public void testhval(){
+    	 BoardState board = new BoardState(
+    			 "0 0 0 0 0 0 0",
+                 "0 0 0 0 0 0 0",
+                 "0 0 0 0 0 0 0",
+                 "0 0 0 0 0 0 0",
+                 "0 0 2 2 0 0 0",
+                 "0 0 2 1 1 1 1"
+                 );
+    	 assertEquals((int) board.hval(), 2);
+    	 BoardState board2 = new BoardState(
+    			 "0 0 0 0 0 0 0",
+                 "0 0 0 0 0 0 0",
+                 "0 0 0 0 0 0 0",
+                 "0 0 2 0 0 0 0",
+                 "0 0 2 2 0 0 0",
+                 "0 0 2 1 1 1 1"
+                 );
+    	 assertEquals((int) board2.hval(), 3);
     }
 }

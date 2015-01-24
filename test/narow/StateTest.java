@@ -33,7 +33,7 @@ public class StateTest {
 	StateNode testSN5 = new StateNode(new BoardState(6,7), new Boolean(false));
 	StateNode testSN8 = new StateNode(new BoardState(6,7), new Boolean(true));
 	
-	@Test
+	/*@Test
 	public void testminimax1(){
 		org.junit.Assert.assertEquals(testSN1.calcMiniMax(), 2); 
 	}
@@ -74,7 +74,7 @@ public class StateTest {
 		testSN5.nextState.add(testSN4);
 		testSN5.nextState.add(testSN8);
 		org.junit.Assert.assertEquals(testSN5.calcMiniMax(), 3); 
-	}
+	}*/
 	
 	BoardState testboard1 = new BoardState(3,3);
 	StateNode testState1 = new StateNode(testboard1, new Boolean(true));
@@ -90,31 +90,23 @@ public class StateTest {
 		//System.out.println(Arrays.deepToString(testboard1.board));
 	}
 	
-	@Test
+/*	@Test
 	public void textmakeboardtree(){
 		testState1.makeMoveTree(2);
-	}
+	}*/
 	
-	BoardState testboard2 = new BoardState(4,5);
+	BoardState testboard2 = new BoardState(
+			"0 0 0 0 0",
+            "0 0 0 0 0",
+            "0 0 0 0 0",
+            "0 0 0 0 0"
+            );
 	StateNode testState2 = new StateNode(testboard2, new Boolean(true));
 	
 	@Test
-	public void textmakeboardtree2(){
-		testState2.makeMoveTree(4);
+	public void testminimax(){
+		testState2.Minimax(5);
+		assertEquals(testState2.nextMove, 2);
 	}
-	
-	/*@Test
-	public void testTree1(){
-		testState1.makeMoveTree(1);
-		assertEquals(testState1.nextState.size(),3);
-	}
-	
-	@Test
-	public void testTree2(){
-		//System.out.println("testTree2");
-		testState1.makeMoveTree(2);
-		assertEquals(testState1.nextState.size(),3);
-		assertEquals(testState1.nextState.get(0).nextState.size(),3);
-	}*/
 
 }
