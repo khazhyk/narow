@@ -77,7 +77,6 @@ public class BoardState{
 	public int traverse(Config c) {
 	    // horizontal, vertical, \, /
 	    int numInRow = 0;
-	    int widthHeightDiff = Math.abs(width - height);
 	    
 	    Player lastP = Player.NONE;
 	    
@@ -169,7 +168,7 @@ public class BoardState{
             numInRow = 0;
             
             // Diag \
-            for (int x = 0; x < ((i < widthHeightDiff) ? height : width) - i; x++) {
+            for (int x = 0; x < (height) && x + i < width; x++) {
                 switch (board[x][x+i]) {
                 case NONE:
                     numInRow = 0;
@@ -228,7 +227,7 @@ public class BoardState{
             numInRow = 0;
             
             // Diag /
-            for (int x = 0; x < ((i < widthHeightDiff) ? height : width) - i; x++) {
+            for (int x = 0;  x < (height) && width - 1 - x - i >= 0; x++) {
                 switch (board[x][width - 1 - x - i]) {
                 case NONE:
                     numInRow = 0;
