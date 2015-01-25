@@ -190,6 +190,63 @@ public class BoardState{
         }
 	    
 	    // Diagonal / Test
+	    
+	    /*
+	     * 0,0 0,1 0,2 0,3
+	     * 1,0 1,1 1,2 1,3
+	     * 2,0 2,1 2,2 2,3
+	     * 
+	     * for n = 2, test starting at 1,3; 0,3; 0,2; 0,1
+	     * 
+	     * start at y = height - n + 1, x = width - 1, 
+	     */
+	    for (int i = height - c.arow; i> 0; i--) {
+	        lastP = Player.NONE;
+	        numInRow = 0;
+	        for (int x = 0; x < height - i; x++) {
+	            switch (board[x+i][width - 1 - x]) {
+	            case NONE:
+	                numInRow = 0;
+	                break;
+	            case ONE:
+	            case TWO:
+                    if (lastP == Player.NONE || lastP == board[x+i][width - 1 - x]) numInRow++;
+                    else numInRow = 1;
+	                break;
+	            }
+	            lastP = board[x+i][width - 1 - x];
+	            
+                // FINAL STATE
+                if (numInRow >= c.arow) {
+                    return (lastP == Player.ONE) ? Integer.MAX_VALUE : Integer.MIN_VALUE; 
+                }
+	        }
+	    }
+	    
+	    for (int i = 0; i <= width - c.arow; i++) {
+            lastP = Player.NONE;
+            numInRow = 0;
+            
+            // Diag /
+            for (int x = 0; x < ((i < widthHeightDiff) ? height : width) - i; x++) {
+                switch (board[x][width - 1 - x - i]) {
+                case NONE:
+                    numInRow = 0;
+                    break;
+                case ONE:
+                case TWO:
+                    if (lastP == Player.NONE || lastP == board[x][width - 1 - x - i]) numInRow++;
+                    else numInRow = 1;
+                    break;
+                }
+                lastP = board[x][width - 1 - x - i];
+                
+                // FINAL STATE
+                if (numInRow >= c.arow) {
+                    return (lastP == Player.ONE) ? Integer.MAX_VALUE : Integer.MIN_VALUE; 
+                }
+            }
+        }
      
 	    // SOON
 	    return 0;
