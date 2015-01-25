@@ -36,6 +36,7 @@ public class BoardStateTest {
         Config c = new Config("6 7 4 1 15");
         
         assertEquals(Integer.MAX_VALUE, board.genHVal(c, Player.ONE));
+        assertEquals(Integer.MIN_VALUE, board.genHVal(c, Player.TWO));
     }
     
     @Test
