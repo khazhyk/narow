@@ -129,6 +129,7 @@ public class BoardState{
 	            switch (piece) {
                     case NONE:
                     	if (lastP != Player.NONE) narow[lastP == Player.ONE ? 0 : 1][numInRow - 1]++;
+                    	lastP = Player.NONE;
                         break vert; // You can't have a piece on top of nothing. :)
                     case ONE:
                     case TWO:

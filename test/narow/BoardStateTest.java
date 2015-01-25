@@ -159,4 +159,26 @@ public class BoardStateTest {
         assertEquals(Integer.MAX_VALUE, board2.genHVal(c));
         assertEquals(Integer.MAX_VALUE, board3.genHVal(c));
     }
+    
+    @Test
+    public void testTraverse() {
+    	BoardState board3 = new BoardState(
+                "0 0 0 0",
+                "0 0 0 0",
+                "0 1 0 0",
+                "0 2 1 2",
+                "0 1 2 1"
+                );
+        
+        Config c = new Config("5 4 3 1 15");
+        
+        int[][]narow = board3.traverse(c);
+        
+        assertEquals(1, narow[0][2]); // 1 three in a row
+        assertEquals(0, narow[1][2]);
+        assertEquals(1, narow[0][1]); 
+        assertEquals(1, narow[1][1]); // 2 has 2 two in a rows, but 1 of them isn't long enough to become a 3 in a row, so is ignored
+        assertEquals(9, narow[0][0]); 
+        assertEquals(8, narow[1][0]); 
+    }
 }
