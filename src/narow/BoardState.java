@@ -68,13 +68,22 @@ public class BoardState{
 		return nextB;
 	}
 	
+	public int genHVal(Config c) {
+		int[][] narow = traverse(c);
+		
+		if (narow[0][c.arow - 1] > 0 ^ narow[1][c.arow - 1] > 0) { // Exactly one winner
+	    	return ((narow[0][c.arow - 1] > 0) ? Integer.MAX_VALUE : Integer.MIN_VALUE);
+	    }
+	    return 0;
+	}
+	
 	/**
 	 * Favor for player 1 is positive,
 	 * Favor for player 2 is negative
 	 * @param c
 	 * @return
 	 */
-	public int traverse(Config c) {
+	public int[][] traverse(Config c) {
 	    // horizontal, vertical, \, /
 	    int numInRow = 0;
 	    
@@ -259,12 +268,7 @@ public class BoardState{
             if (lastP != Player.NONE) narow[lastP == Player.ONE ? 0 : 1][numInRow - 1]++; 
         }
 	    
-	    // SOON
-	    // Calculate if there is game over
-	    if (narow[0][c.arow - 1] > 0 ^ narow[1][c.arow - 1] > 0) { // Exactly one winner
-	    	return ((narow[0][c.arow - 1] > 0) ? Integer.MAX_VALUE : Integer.MIN_VALUE);
-	    }
-	    return 0;
+	    return narow;
 	}
 	
 	
