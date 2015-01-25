@@ -113,4 +113,36 @@ public class BoardStateTest {
                  );
     	 assertEquals((int) board2.hval(), 3);
     }
+    
+    @Test
+    public void testPopout(){
+    	BoardState board = new BoardState(
+   			 	"0 0 0 0 0 0 0",
+                "0 0 0 0 0 0 0",
+                "0 0 0 0 0 0 0",
+                "0 0 2 0 0 0 0",
+                "0 0 2 2 0 0 0",
+                "0 0 2 1 1 1 1"
+                );
+    	BoardState boardresult = new BoardState(
+   			 	"0 0 0 0 0 0 0",
+                "0 0 0 0 0 0 0",
+                "0 0 0 0 0 0 0",
+                "0 0 2 0 0 0 0",
+                "0 0 2 0 0 0 0",
+                "0 0 2 2 1 1 1"
+                );
+    	/*for (int i = 0; i<board.width; i++){
+    		for (int j = 0; j<board.height; j++){
+    			System.err.print(board.nextBoard(3, Action.PopOut, false).board[i][j]+"  ");
+    		}
+    		System.err.println();
+    	}*/
+    	/*board.nextBoard(3, Action.PopOut, false);
+    	System.out.println(board.board[5][6]);
+    	System.out.println(board.height+"   "+ board.width);
+*/
+    	System.out.println(board.board[5][3]);
+    	assertEquals(board.nextBoard(3, Action.PopOut, false).board[5][3], Player.TWO);
+    }
 }

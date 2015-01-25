@@ -53,17 +53,34 @@ public class BoardState{
 		BoardState nextB = new BoardState(this.board);
 		//System.err.print(nextB.board[this.height-1][column]);
 		//System.err.println(this.height);
-		if (this.board[this.height-1][column] == Player.NONE){
-			//System.err.print("yes");
-			if (player) {nextB.board[this.height-1][column] = Player.ONE;} 
-			else {nextB.board[this.height-1][column] = Player.TWO;}
+		//System.err.println(action);
+		if (action == Action.Place) {
+			
+			if (this.board[this.height - 1][column] == Player.NONE) {
+				// System.err.print("yes");
+				if (player) {
+					nextB.board[this.height - 1][column] = Player.ONE;
+				} else {
+					nextB.board[this.height - 1][column] = Player.TWO;
+				}
+			}
+			for (int i = 0; i < this.height - 1; i++) {
+				if (this.board[i + 1][column] != Player.NONE) {
+					// System.err.print("yes");
+					if (player) {
+						nextB.board[i][column] = Player.ONE;
+					} else {
+						nextB.board[i][column] = Player.TWO;
+					}
+					break;
+				}
+			}
 		}
-		for (int i=0; i<this.height-1; i++){
-			if (this.board[i+1][column] !=Player.NONE){
-				//System.err.print("yes");
-				if (player) {nextB.board[i][column] = Player.ONE;} 
-				else {nextB.board[i][column] =Player.TWO;}
-				break;}
+		else if (action == Action.PopOut){
+			for (int j = height-1; j > 0; j--){
+				nextB.board[j][column] = board[j-1][column];
+			}
+			nextB.board[0][column] = Player.NONE;
 		}
 		return nextB;
 	}
