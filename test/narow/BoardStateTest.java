@@ -19,7 +19,7 @@ public class BoardStateTest {
         
         Config c = new Config("6 7 4 1 15");
         
-        assertEquals(Integer.MAX_VALUE, board.genHVal(c));
+        assertEquals(Integer.MAX_VALUE, board.genHVal(c, Player.ONE));
     }
     
     @Test
@@ -35,7 +35,7 @@ public class BoardStateTest {
         
         Config c = new Config("6 7 4 1 15");
         
-        assertEquals(Integer.MAX_VALUE, board.genHVal(c));
+        assertEquals(Integer.MAX_VALUE, board.genHVal(c, Player.ONE));
     }
     
     @Test
@@ -61,8 +61,8 @@ public class BoardStateTest {
         
         Config c = new Config("6 7 4 1 15");
         
-        assertEquals(Integer.MIN_VALUE, board.genHVal(c));
-        assertEquals(Integer.MIN_VALUE, board2.genHVal(c));
+        assertEquals(Integer.MIN_VALUE, board.genHVal(c, Player.ONE));
+        assertEquals(Integer.MIN_VALUE, board2.genHVal(c, Player.ONE));
     }
     
     @Test
@@ -96,9 +96,9 @@ public class BoardStateTest {
         
         Config c = new Config("6 7 4 1 15");
         
-        assertEquals(Integer.MAX_VALUE, board.genHVal(c));
-        assertEquals(Integer.MAX_VALUE, board2.genHVal(c));
-        assertEquals(Integer.MAX_VALUE, board3.genHVal(c));
+        assertEquals(Integer.MAX_VALUE, board.genHVal(c, Player.ONE));
+        assertEquals(Integer.MAX_VALUE, board2.genHVal(c, Player.ONE));
+        assertEquals(Integer.MAX_VALUE, board3.genHVal(c, Player.ONE));
     }
     
     @Test
@@ -123,9 +123,9 @@ public class BoardStateTest {
         
         Config c = new Config("3 4 3 1 15");
         
-        assertEquals(0, board.genHVal(c));
-        assertEquals(Integer.MAX_VALUE, board2.genHVal(c));
-        assertEquals(Integer.MAX_VALUE, board3.genHVal(c));
+        assertEquals(0, board.genHVal(c, Player.ONE));
+        assertEquals(Integer.MAX_VALUE, board2.genHVal(c, Player.ONE));
+        assertEquals(Integer.MAX_VALUE, board3.genHVal(c, Player.ONE));
     }
     
     @Test
@@ -155,9 +155,9 @@ public class BoardStateTest {
         
         Config c = new Config("5 4 3 1 15");
         
-        assertEquals(0, board.genHVal(c));
-        assertEquals(Integer.MAX_VALUE, board2.genHVal(c));
-        assertEquals(Integer.MAX_VALUE, board3.genHVal(c));
+        assertEquals(0, board.genHVal(c, Player.ONE));
+        assertEquals(Integer.MAX_VALUE, board2.genHVal(c, Player.ONE));
+        assertEquals(Integer.MAX_VALUE, board3.genHVal(c, Player.ONE));
     }
     
     @Test
@@ -172,7 +172,7 @@ public class BoardStateTest {
         
         Config c = new Config("5 4 3 1 15");
         
-        int[][]narow = board3.traverse(c);
+        int[][]narow = board3.traverse(c, Player.ONE);
         
         assertEquals(1, narow[0][2]); // 1 three in a row
         assertEquals(0, narow[1][2]);
