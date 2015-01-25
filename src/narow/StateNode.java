@@ -60,6 +60,61 @@ public class StateNode {
 		return minimaxscore;
 	}
 	
+	/**
+	 * Implement Minimax with AB pruning
+	 * @param levels
+	 * @param alpha (value of best choice so far for max) (for top node, -inf)
+	 * @param beta (value of best choice so far for min) (for top node, inf)
+	 * @return minimaxscore 
+	 */
+	public Integer MinimaxAB(int level, int alpha, int beta){
+		if (level == 1){//If node is at the lowest level of searching, just return hvalue
+			System.err.println("next: "+current.hval());
+			return current.hval();
+		}
+		int max = 0;
+		int min = 5;
+		for (int w = 0; w<this.current.width; w++){//try dropping a token in each column
+			System.err.print("("+level+","+w+") "+alpha+" "+beta);
+			if (this.player){//for player 1, find max of the next nodes
+				//Find the minimax value of the next statenode if the token is dropped in column w
+				int next = new StateNode(this.current.nextBoard(w, Action.Place, this.player), !player).MinimaxAB(level-1, alpha, beta);
+				//if value of "next" is better than the last best found move, this is new max
+				if (next > max){
+					//System.out.println("better move");
+					max = next;
+					this.nextMove = w;
+					this.minimaxscore = max;
+				}
+				if (max >= beta){
+					System.err.println("pruning");
+					return max;
+				}
+				if (max > alpha){
+					alpha = max;
+				}
+			}
+			else{//if player 2 find min of next nodes
+				int next = new StateNode(this.current.nextBoard(w, Action.Place, this.player), !player).MinimaxAB(level-1, alpha, beta);
+				if (next < min){
+					//System.out.println("better move");
+					min = next;
+					this.nextMove = w;
+					this.minimaxscore = min;
+				}
+				if (min <= alpha){
+					System.err.println("pruning");
+					return max;
+				}
+				if (min < beta){
+					beta = min;
+				}
+			}
+		}
+		//return the minimax score of the node
+		System.err.println("done "+minimaxscore);
+		return minimaxscore;
+	}
 	
 	
 	public void setMMScore(int value){

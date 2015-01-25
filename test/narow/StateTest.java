@@ -76,9 +76,19 @@ public class StateTest {
 		org.junit.Assert.assertEquals(testSN5.calcMiniMax(), 3); 
 	}*/
 	
-	BoardState testboard1 = new BoardState(3,3);
+	BoardState testboard1 = new BoardState(
+			"0 0 0",
+            "0 0 0",
+            "0 0 0"
+            );
 	StateNode testState1 = new StateNode(testboard1, new Boolean(true));
 	
+	@Test
+	public void testAB(){
+		int est = testState1.MinimaxAB(5, -1, 10);
+		System.err.println(est);
+		System.err.println(testState1.nextMove);
+	}
 	
 	
 	@Test 

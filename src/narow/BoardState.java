@@ -199,7 +199,7 @@ public class BoardState{
 	//test heuristic, counts the number of tokens in column 2
 	public Integer hval(){
 		int tokencount = 0;
-		int testcolumn = 2;
+		int testcolumn = 1;
 		for (int i = 0; i < this.height; i++){
 			if (board[i][testcolumn] != Player.NONE){
 				tokencount++;
