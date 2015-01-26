@@ -84,7 +84,7 @@ public class BoardState{
 			for (int i = 0; i < this.height - 1; i++) {
 				if (this.board[i + 1][column] != Player.NONE) {
 					// System.err.print("yes");
-					if (player == Player.THEM) {
+					if (player == Player.US) {
 						nextB.board[i][column] = Player.US;
 					} else {
 						nextB.board[i][column] = Player.THEM;
