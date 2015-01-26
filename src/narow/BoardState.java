@@ -109,9 +109,7 @@ public class BoardState{
 	    	return ((narow[0][c.arow - 1] > 0) ? Integer.MAX_VALUE : Integer.MIN_VALUE);
 	    }
 	   
-		
-		
-		return 0;
+		return 0; // Multiple winners or no winners is a tie
 	}
 	
 	/**
