@@ -18,7 +18,7 @@ public class StateTest {
 		//System.out.println(Arrays.deepToString(teststate.board));
 		//teststate.nextBoard(3,1,new Boolean(false));
 		//System.out.println(Arrays.deepToString(teststate.board));
-		Player[][] testboardarray = new Player[6][7];
+		int[][] testboardarray = new int[6][7];
 		BoardState teststate2 = new BoardState(testboardarray);
 		org.junit.Assert.assertEquals(teststate2.height, 6);
 		org.junit.Assert.assertEquals(teststate2.width, 7); 

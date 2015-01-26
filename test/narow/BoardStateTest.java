@@ -214,4 +214,31 @@ public class BoardStateTest {
     	System.out.println(board.board[5][3]);
     	assertEquals(board.nextBoard(3, Action.PopOut, false).board[5][3], Player.TWO);
     }
+    
+    @Test
+    public void testLegalMoves() {
+        assertEquals(7, new BoardState(6,7).allLegalMoves(Player.ONE).size());
+    }
+    
+    @Test
+    public void testLegal2Moves() {
+        BoardState board = new BoardState(
+                "0 0 0 0 0 0 0",
+                "0 0 0 0 0 0 0",
+                "0 0 0 0 0 0 0",
+                "0 0 0 0 0 0 0",
+                "0 0 0 2 0 0 0",
+                "0 0 0 1 0 0 0"
+                );
+        BoardState board2 = new BoardState(
+                "0 0 0 2 0 0 0",
+                "0 0 0 1 0 0 0",
+                "0 0 0 2 0 0 0",
+                "0 0 0 1 0 0 0",
+                "0 0 0 2 0 0 0",
+                "0 0 0 1 0 0 0"
+                );
+        assertEquals(8, board.allLegalMoves(Player.ONE).size());
+        assertEquals(7, board2.allLegalMoves(Player.ONE).size());
+    }
 }

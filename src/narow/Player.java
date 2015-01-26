@@ -1,7 +1,7 @@
 package narow;
 
-public enum Player {
-	NONE,
-	ONE,
-	TWO;
+public class Player {
+	public static final int NONE = 0;
+	public static final int ONE = 1;
+	public static final int TWO = 2;
 }

@@ -2,6 +2,10 @@ package narow;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
@@ -14,20 +18,20 @@ public class BoardStateBenchmark {
 	@Rule
 	public TestRule benchmarkRun = new BenchmarkRule();
 	
-	@BenchmarkOptions(benchmarkRounds = 1, warmupRounds = 0)
+	List<BoardState> bs;
+	BoardState board;
+	Config c = new Config("6 7 4 1 15");
+	@Before
+	public void setUp() {
+	   
+        
+	}
+	
+	@BenchmarkOptions(benchmarkRounds = 10000, warmupRounds = 50)
 	@Test
     public void testHorizontalWin() {
-        BoardState board = new BoardState(
-                "0 0 0 0 0 0 0",
-                "0 0 0 0 0 0 0",
-                "0 0 0 0 0 0 0",
-                "0 0 0 0 0 0 0",
-                "0 0 2 2 0 0 0",
-                "0 0 2 1 1 1 1"
-                );
-        
-        Config c = new Config("6 7 4 1 15");
-        
-        assertEquals(Integer.MAX_VALUE, board.genHVal(c, Player.ONE));
+        for (BoardState b : new BoardState(7, 6).allLegalMoves(Player.ONE)){
+            b.genHVal(c, Player.ONE);
+        }
     }
 }
