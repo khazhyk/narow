@@ -38,7 +38,8 @@ class PlayerState {
 	 * We need to calculate until time runs out, then send the move
 	 * @throws IOException
 	 */
-	void makeMove() throws IOException {
+	@SuppressWarnings("deprecation")
+    void makeMove() throws IOException {
 		Runnable searchForMove = new Runnable() {
 		    @Override
 		    public void run() {
