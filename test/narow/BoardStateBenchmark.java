@@ -27,8 +27,8 @@ public class BoardStateBenchmark {
 	@BenchmarkOptions(benchmarkRounds = 10000, warmupRounds = 50)
 	@Test
     public void testHorizontalWin() {
-        for (BoardState b : new BoardState(7, 6).allLegalMoves(Player.ONE)){
-            b.genHVal(c, Player.ONE);
+        for (BoardState b : new BoardState(7, 6).allLegalMoves(Player.US)){
+            b.genHVal(c);
         }
     }
 }

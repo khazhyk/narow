@@ -1,6 +1,7 @@
 package narow;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 
 class PlayerState {
@@ -8,13 +9,33 @@ class PlayerState {
 	Config config;
 	String playerName = "lwalker_kkumykov_" + Long.toHexString(new java.security.SecureRandom().nextLong());
 	Random random = new Random();
-	int playerNum; // Are we player 1 or player 2 ?
+	boolean arePlayerOne;
+	
+	boolean weUsedPopout;
+	boolean theyUsedPopout;
+	
+	BoardState bs;
+	
+	List<BoardState> bestPath;
+	
+	/**
+	 * Update the board
+	 * @param column
+	 * @param action
+	 * @param isPlayerOne True if player 1 is acting, false otherwise
+	 */
+	void updateBoard(int column, int action, int player) {
+	    bs = bs.nextBoard(column, action, player);
+	}
 	
 	
-	
-	void makeMove(String move) throws IOException {
+	/**
+	 * We need to calculate until time runs out, then send the move
+	 * @throws IOException
+	 */
+	void makeMove() throws IOException {
 		
-		String[] ls =move.split(" ");
+		
 		System.out.println(random.nextInt(config.width) + " 1");
 	}
 }

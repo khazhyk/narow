@@ -1,11 +1,25 @@
 package narow;
 
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 
 public class BoardStateTest {
 
+    @Test
+    public void testGame() {
+        BoardState board = new BoardState(2,2);
+        Config c = new Config("2 2 2 1 15");
+        
+        board = board.nextBoard(0, Action.Place, Player.US);
+        board = board.nextBoard(0, Action.Place, Player.THEM);
+        board = board.nextBoard(1, Action.Place, Player.US);
+        
+        assertEquals(Integer.MAX_VALUE, board.genHVal(c));
+    }
+    
+    
     @Test
     public void testHorizontalWin() {
         BoardState board = new BoardState(
@@ -19,7 +33,7 @@ public class BoardStateTest {
         
         Config c = new Config("6 7 4 1 15");
         
-        assertEquals(Integer.MAX_VALUE, board.genHVal(c, Player.ONE));
+        assertEquals(Integer.MAX_VALUE, board.genHVal(c));
     }
     
     @Test
@@ -35,8 +49,7 @@ public class BoardStateTest {
         
         Config c = new Config("6 7 4 1 15");
         
-        assertEquals(Integer.MAX_VALUE, board.genHVal(c, Player.ONE));
-        assertEquals(Integer.MIN_VALUE, board.genHVal(c, Player.TWO));
+        assertEquals(Integer.MAX_VALUE, board.genHVal(c));
     }
     
     @Test
@@ -62,8 +75,8 @@ public class BoardStateTest {
         
         Config c = new Config("6 7 4 1 15");
         
-        assertEquals(Integer.MIN_VALUE, board.genHVal(c, Player.ONE));
-        assertEquals(Integer.MIN_VALUE, board2.genHVal(c, Player.ONE));
+        assertEquals(Integer.MIN_VALUE, board.genHVal(c));
+        assertEquals(Integer.MIN_VALUE, board2.genHVal(c));
     }
     
     @Test
@@ -97,9 +110,9 @@ public class BoardStateTest {
         
         Config c = new Config("6 7 4 1 15");
         
-        assertEquals(Integer.MAX_VALUE, board.genHVal(c, Player.ONE));
-        assertEquals(Integer.MAX_VALUE, board2.genHVal(c, Player.ONE));
-        assertEquals(Integer.MAX_VALUE, board3.genHVal(c, Player.ONE));
+        assertEquals(Integer.MAX_VALUE, board.genHVal(c));
+        assertEquals(Integer.MAX_VALUE, board2.genHVal(c));
+        assertEquals(Integer.MAX_VALUE, board3.genHVal(c));
     }
     
     @Test
@@ -124,9 +137,9 @@ public class BoardStateTest {
         
         Config c = new Config("3 4 3 1 15");
         
-        assertEquals(0, board.genHVal(c, Player.ONE));
-        assertEquals(Integer.MAX_VALUE, board2.genHVal(c, Player.ONE));
-        assertEquals(Integer.MAX_VALUE, board3.genHVal(c, Player.ONE));
+        assertEquals(0, board.genHVal(c));
+        assertEquals(Integer.MAX_VALUE, board2.genHVal(c));
+        assertEquals(Integer.MAX_VALUE, board3.genHVal(c));
     }
     
     @Test
@@ -156,9 +169,9 @@ public class BoardStateTest {
         
         Config c = new Config("5 4 3 1 15");
         
-        assertEquals(0, board.genHVal(c, Player.ONE));
-        assertEquals(Integer.MAX_VALUE, board2.genHVal(c, Player.ONE));
-        assertEquals(Integer.MAX_VALUE, board3.genHVal(c, Player.ONE));
+        assertEquals(0, board.genHVal(c));
+        assertEquals(Integer.MAX_VALUE, board2.genHVal(c));
+        assertEquals(Integer.MAX_VALUE, board3.genHVal(c));
     }
     
     @Test
@@ -173,7 +186,7 @@ public class BoardStateTest {
         
         Config c = new Config("5 4 3 1 15");
         
-        int[][]narow = board3.traverse(c, Player.ONE);
+        int[][]narow = board3.traverse(c, Player.US);
         
         assertEquals(1, narow[0][2]); // 1 three in a row
         assertEquals(0, narow[1][2]);
@@ -212,12 +225,12 @@ public class BoardStateTest {
     	System.out.println(board.height+"   "+ board.width);
 */
     	System.out.println(board.board[5][3]);
-    	assertEquals(board.nextBoard(3, Action.PopOut, false).board[5][3], Player.TWO);
+    	assertEquals(board.nextBoard(3, Action.PopOut, Player.US).board[5][3], Player.THEM);
     }
     
     @Test
     public void testLegalMoves() {
-        assertEquals(7, new BoardState(6,7).allLegalMoves(Player.ONE).size());
+        assertEquals(7, new BoardState(6,7).allLegalMoves(Player.US).size());
     }
     
     @Test
@@ -238,7 +251,7 @@ public class BoardStateTest {
                 "0 0 0 2 0 0 0",
                 "0 0 0 1 0 0 0"
                 );
-        assertEquals(8, board.allLegalMoves(Player.ONE).size());
-        assertEquals(7, board2.allLegalMoves(Player.ONE).size());
+        assertEquals(8, board.allLegalMoves(Player.US).size());
+        assertEquals(7, board2.allLegalMoves(Player.US).size());
     }
 }

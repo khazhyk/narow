@@ -7,16 +7,16 @@ public class BoardState{
 	int[][] board;
 	int height;
 	int width;
-	boolean [] popUsed = {
-	        false, false
-	};
+	int playerToMove;
 	
+	// this is breadth, bad
+	@Deprecated
 	public List<BoardState> allLegalMoves(int player) {
 	    List<BoardState> list = new ArrayList<BoardState>();
 	    
 	    for (int i = 0; i < width; i++) {
-	        if (board[0][i] == Player.NONE) list.add(this.nextBoard(i, Action.Place, player == Player.ONE));
-	        if (board[height - 1][i] == player) list.add(this.nextBoard(i, Action.PopOut, player == Player.ONE));
+	        if (board[0][i] == Player.NONE) list.add(this.nextBoard(i, Action.Place, player));
+	        if (board[height - 1][i] == player) list.add(this.nextBoard(i, Action.PopOut, player));
 	    }
 	    
 	    return list;
@@ -66,7 +66,7 @@ public class BoardState{
 	 * @param player
 	 * @return
 	 */
-	public BoardState nextBoard(int column, int action, boolean player){
+	public BoardState nextBoard(int column, int action, int player){
 		BoardState nextB = new BoardState(this.board);
 		//System.err.print(nextB.board[this.height-1][column]);
 		//System.err.println(this.height);
@@ -75,19 +75,19 @@ public class BoardState{
 			
 			if (this.board[this.height - 1][column] == Player.NONE) {
 				// System.err.print("yes");
-				if (player) {
-					nextB.board[this.height - 1][column] = Player.ONE;
+				if (player == Player.US) {
+					nextB.board[this.height - 1][column] = Player.US;
 				} else {
-					nextB.board[this.height - 1][column] = Player.TWO;
+					nextB.board[this.height - 1][column] = Player.THEM;
 				}
 			}
 			for (int i = 0; i < this.height - 1; i++) {
 				if (this.board[i + 1][column] != Player.NONE) {
 					// System.err.print("yes");
-					if (player) {
-						nextB.board[i][column] = Player.ONE;
+					if (player == Player.THEM) {
+						nextB.board[i][column] = Player.US;
 					} else {
-						nextB.board[i][column] = Player.TWO;
+						nextB.board[i][column] = Player.THEM;
 					}
 					break;
 				}
@@ -102,8 +102,8 @@ public class BoardState{
 		return nextB;
 	}
 	
-	public int genHVal(Config c, int maxPlayer) {
-		final int[][] narow = traverse(c, maxPlayer);
+	public int genHVal(Config c) {
+		final int[][] narow = traverse(c, Player.US); // we're always max
 		
 		if (narow[0][c.arow - 1] > 0 ^ narow[1][c.arow - 1] > 0) { // Exactly one winner
 	    	return ((narow[0][c.arow - 1] > 0) ? Integer.MAX_VALUE : Integer.MIN_VALUE);
@@ -142,8 +142,8 @@ public class BoardState{
     	            	if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++; 
     	            	numInRow = 0;
     	                break;
-    	            case Player.ONE:
-    	            case Player.TWO:
+    	            case Player.US:
+    	            case Player.THEM:
     	                if (lastP == Player.NONE || lastP == piece) numInRow++;
                         else {
                         	narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++;
@@ -168,8 +168,8 @@ public class BoardState{
                     	if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++;
                     	lastP = Player.NONE;
                         break vert; // You can't have a piece on top of nothing. :)
-                    case Player.ONE:
-                    case Player.TWO:
+                    case Player.US:
+                    case Player.THEM:
                         if (lastP == Player.NONE || lastP == piece) numInRow++;
                         else {
                         	narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++;
@@ -204,8 +204,8 @@ public class BoardState{
 	            	if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++;
 	                numInRow = 0;
 	                break;
-	            case Player.ONE:
-	            case Player.TWO:
+	            case Player.US:
+	            case Player.THEM:
                     if (lastP == Player.NONE || lastP == piece) numInRow++;
                     else {
                     	narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++;
@@ -231,8 +231,8 @@ public class BoardState{
                 	if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++;
                     numInRow = 0;
                     break;
-                case Player.ONE:
-                case Player.TWO:
+                case Player.US:
+                case Player.THEM:
                     if (lastP == Player.NONE || lastP == piece) numInRow++;
                     else {
                     	narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++;
@@ -266,8 +266,8 @@ public class BoardState{
 	            	if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++;
 	                numInRow = 0;
 	                break;
-	            case Player.ONE:
-	            case Player.TWO:
+	            case Player.US:
+	            case Player.THEM:
                     if (lastP == Player.NONE || lastP == piece) numInRow++;
                     else {
                     	narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++;
@@ -292,8 +292,8 @@ public class BoardState{
                 	if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++;
                     numInRow = 0;
                     break;
-                case Player.ONE:
-                case Player.TWO:
+                case Player.US:
+                case Player.THEM:
                     if (lastP == Player.NONE || lastP == piece) numInRow++;
                     else {
                     	narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++;
