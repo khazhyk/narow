@@ -29,4 +29,16 @@ public class ID_DFSTest {
         
         assertEquals(Integer.MAX_VALUE, id.calcValue(board, Integer.MAX_VALUE, true, true, true));
     }
+    
+    @Test
+    public void test3InARow4by4() {
+        BoardState board = new BoardState(6,7);
+        
+        PlayerState p = new PlayerState();
+        p.config = new Config("6 7 4 1 15");
+        
+        ID_DFS id = new ID_DFS(p);
+        
+        assertEquals(Integer.MAX_VALUE, id.calcValue(board, Integer.MAX_VALUE, true, false, false));
+    }
 }

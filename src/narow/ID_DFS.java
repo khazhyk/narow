@@ -48,7 +48,7 @@ public class ID_DFS {
             }
             if (canPop && bs.board[bs.height - 1][i] == playerToMove) {
                 int next = calcValue(bs.nextBoard(i, Action.PopOut, playerToMove),
-                        depth - 1, !isMaxLevel, canPopUs, canPopThem, alpha, beta);
+                        depth - 1, !isMaxLevel, isMaxLevel ? false : canPopUs, isMaxLevel ? canPopThem : false, alpha, beta);
                 
                 if (isMaxLevel ? (next > bestScore) : (next < bestScore)) {
                     bestScore = next;

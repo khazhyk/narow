@@ -137,21 +137,21 @@ public class BoardState{
 	        	int piece = board[x][y];
 	            switch (piece) {
     	            case Player.NONE:
-    	            	if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++; 
+    	            	if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][Math.min(c.arow -1, numInRow - 1)]++; 
     	            	numInRow = 0;
     	                break;
     	            case Player.US:
     	            case Player.THEM:
     	                if (lastP == Player.NONE || lastP == piece) numInRow++;
                         else {
-                        	narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++;
+                        	narow[lastP == maxPlayer ? 0 : 1][Math.min(c.arow -1, numInRow - 1)]++;
                         	numInRow = 1;
                         }
     	                break;
 	            }
 	            lastP = piece;
 	        }
-	        if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++; 
+	        if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][Math.min(c.arow -1, numInRow - 1)]++; 
 	    }
 	    
 	    // Vertical Test
@@ -163,21 +163,21 @@ public class BoardState{
 	        	int piece = board[x][y];
 	            switch (piece) {
                     case Player.NONE:
-                    	if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++;
+                    	if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][Math.min(c.arow -1, numInRow - 1)]++;
                     	lastP = Player.NONE;
                         break vert; // You can't have a piece on top of nothing. :)
                     case Player.US:
                     case Player.THEM:
                         if (lastP == Player.NONE || lastP == piece) numInRow++;
                         else {
-                        	narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++;
+                        	narow[lastP == maxPlayer ? 0 : 1][Math.min(c.arow -1, numInRow - 1)]++;
                         	numInRow = 1;
                         }
                         break;
 	            }
 	            lastP = piece;
 	        }
-	        if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++; 
+	        if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][Math.min(c.arow -1, numInRow - 1)]++; 
 	    }
 	    
 	    // Diagonal \ Test
@@ -199,21 +199,21 @@ public class BoardState{
 	            int piece = board[x+i][x];
 				switch (piece) {
 	            case Player.NONE:
-	            	if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++;
+	            	if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][Math.min(c.arow -1, numInRow - 1)]++;
 	                numInRow = 0;
 	                break;
 	            case Player.US:
 	            case Player.THEM:
                     if (lastP == Player.NONE || lastP == piece) numInRow++;
                     else {
-                    	narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++;
+                    	narow[lastP == maxPlayer ? 0 : 1][Math.min(c.arow -1, numInRow - 1)]++;
                     	numInRow = 1;
                     };
 	                break;
 	            }
 	            lastP = piece;
 	        }
-	        if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++; 
+	        if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][Math.min(c.arow -1, numInRow - 1)]++; 
 	    }
 	    
 	    // Going Right from 0,0
@@ -226,21 +226,21 @@ public class BoardState{
                 int piece = board[x][x+i];
 				switch (piece) {
                 case Player.NONE:
-                	if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++;
+                	if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][Math.min(c.arow -1, numInRow - 1)]++;
                     numInRow = 0;
                     break;
                 case Player.US:
                 case Player.THEM:
                     if (lastP == Player.NONE || lastP == piece) numInRow++;
                     else {
-                    	narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++;
+                    	narow[lastP == maxPlayer ? 0 : 1][Math.min(c.arow -1, numInRow - 1)]++;
                     	numInRow = 1;
                     }
                     break;
                 }
                 lastP = piece;
             }
-            if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++; 
+            if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][Math.min(c.arow -1, numInRow - 1)]++; 
         }
 	    
 	    // Diagonal / Test
@@ -261,21 +261,21 @@ public class BoardState{
 	            int piece = board[x+i][width - 1 - x];
 				switch (piece) {
 	            case Player.NONE:
-	            	if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++;
+	            	if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][Math.min(c.arow -1, numInRow - 1)]++;
 	                numInRow = 0;
 	                break;
 	            case Player.US:
 	            case Player.THEM:
                     if (lastP == Player.NONE || lastP == piece) numInRow++;
                     else {
-                    	narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++;
+                    	narow[lastP == maxPlayer ? 0 : 1][Math.min(c.arow -1, numInRow - 1)]++;
                     	numInRow = 1;
                     }
 	                break;
 	            }
 	            lastP = piece;
 	        }
-	        if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++; 
+	        if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][Math.min(c.arow -1, numInRow - 1)]++; 
 	    }
 	    
 	    for (int i = 0; i <= width - c.arow; i++) {
@@ -287,21 +287,21 @@ public class BoardState{
                 int piece = board[x][width - 1 - x - i];
 				switch (piece) {
                 case Player.NONE:
-                	if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++;
+                	if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][Math.min(c.arow -1, numInRow - 1)]++;
                     numInRow = 0;
                     break;
                 case Player.US:
                 case Player.THEM:
                     if (lastP == Player.NONE || lastP == piece) numInRow++;
                     else {
-                    	narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++;
+                    	narow[lastP == maxPlayer ? 0 : 1][Math.min(c.arow -1, numInRow - 1)]++;
                     	numInRow = 1;
                     }
                     break;
                 }
                 lastP = piece;
             }
-            if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][numInRow - 1]++; 
+            if (lastP != Player.NONE) narow[lastP == maxPlayer ? 0 : 1][Math.min(c.arow -1, numInRow - 1)]++; 
         }
 	    
 	    return narow;
