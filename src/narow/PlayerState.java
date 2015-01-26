@@ -26,9 +26,9 @@ class PlayerState {
 	 * @param action
 	 * @param isPlayerOne True if player 1 is acting, false otherwise
 	 */
-	void updateBoard(int column, int action, int player) {
+	void updateBoardThem(int column, int action) {
 		if (action == Action.PopOut) theyUsedPopout = true;
-	    bs = bs.nextBoard(column, action, player);
+	    bs = bs.nextBoard(column, action, Player.THEM);
 	}
 	
 	
@@ -37,9 +37,10 @@ class PlayerState {
 	 * @throws IOException
 	 */
 	void makeMove() throws IOException {
-		Move move = search.findBestMove(bs, 4, true, !weUsedPopout, !theyUsedPopout);
+		Move move = search.findBestMove(bs, 9, true, !weUsedPopout, !theyUsedPopout);
+		System.out.println(move);
 		
 		if (move.action == Action.PopOut) weUsedPopout = true;
-		System.out.println(move);
+		bs = bs.nextBoard(move.column, move.action, Player.US);
 	}
 }

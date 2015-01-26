@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 
-class App {
+public class App {
 	public static void main(String[] args) throws IOException {
 		PlayerState player = new PlayerState();
 		String inLine = "";
@@ -21,7 +21,8 @@ class App {
 		player.config = new Config(input.readLine());
 		player.bs = new BoardState(player.config.height, player.config.width);
 		
-		if (player.config.weGoFirst) {
+		if (player.config.playerGoesFirst == (player.arePlayerOne ? 1 : 2)) {
+			player.bs.playerToMove = Player.US;
 		    player.makeMove();
 		}
 		
@@ -31,7 +32,7 @@ class App {
 			inLine = input.readLine();
 			lineParts = inLine.split(" ");
 			if (lineParts.length == 2) {
-			    player.updateBoard(Integer.parseInt(lineParts[0]), Integer.parseInt(lineParts[1]), Player.THEM);
+			    player.updateBoardThem(Integer.parseInt(lineParts[0]), Integer.parseInt(lineParts[1]));
 			    player.makeMove();
 			} else {
 			    // int result = Integer.parseInt(lineParts[0]);

@@ -13,7 +13,7 @@ public class ID_DFS {
     }
     
     public Move findBestMove(BoardState bs, int depth, boolean isMaxLevel, boolean canPopUs, boolean canPopThem) {
-    	Move bestMove = new Move(0, Action.Place);
+    	Move bestMove = null;
     	int bestScore = isMaxLevel ? Integer.MIN_VALUE : Integer.MAX_VALUE;
     	
     	int playerToMove = isMaxLevel ? Player.US : Player.THEM;
@@ -71,7 +71,6 @@ public class ID_DFS {
             return hval;
         }
         
-        Move bestMove;
         int bestScore = isMaxLevel ? Integer.MIN_VALUE : Integer.MAX_VALUE;
         
         int playerToMove = isMaxLevel ? Player.US : Player.THEM; // We're always MAX
@@ -84,7 +83,6 @@ public class ID_DFS {
                 
                 if (isMaxLevel ? (next > bestScore) : (next < bestScore)) {
                     bestScore = next;
-                    bestMove = new Move(i, Action.Place);
                 }
                 if (isMaxLevel ? (bestScore >= beta) : (bestScore <= alpha)) {
                     return bestScore;
@@ -101,7 +99,6 @@ public class ID_DFS {
                 
                 if (isMaxLevel ? (next > bestScore) : (next < bestScore)) {
                     bestScore = next;
-                    bestMove = new Move(i, Action.PopOut);
                 }
                 if (isMaxLevel ? (bestScore >= beta) : (bestScore <= alpha)) {
                     return bestScore;
