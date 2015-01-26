@@ -45,13 +45,13 @@ public class ID_DFSTest {
     
     @Test
     public void test3InARow4by4() {
-        BoardState board = new BoardState(6,7);
+        BoardState board = new BoardState(4,4);
         
         PlayerState p = new PlayerState();
-        p.config = new Config("6 7 4 1 15");
+        p.config = new Config("4 4 3 1 15");
         
         ID_DFS id = new ID_DFS(p);
         
-        assertEquals(Integer.MAX_VALUE, id.calcValue(board, 4, true, true, true));
+        assertEquals(Integer.MAX_VALUE, id.calcValue(board, Integer.MAX_VALUE, true, true, true));
     }
 }

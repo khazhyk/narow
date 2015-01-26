@@ -37,23 +37,6 @@ public class BoardStateTest {
     }
     
     @Test
-    public void testThings() {
-    	 BoardState board = new BoardState(
-                 "0 0 0 0 0 0 0",
-                 "0 0 0 0 0 0 0",
-                 "0 0 0 0 0 0 0",
-                 "0 0 0 0 0 0 0",
-                 "0 0 0 0 0 0 0",
-                 "0 0 0 0 0 0 0"
-                 );
-         
-    	 board = board.nextBoard(3, Action.Place, Player.US);
-         Config c = new Config("6 7 4 1 15");
-         
-         assertEquals(Integer.MAX_VALUE, board.genHVal(c));
-    }
-    
-    @Test
     public void testVertWin() {
         BoardState board = new BoardState(
                 "0 0 0 0 0 0 0",
