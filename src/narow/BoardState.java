@@ -66,7 +66,7 @@ public class BoardState{
 	 * @param player
 	 * @return
 	 */
-	public BoardState nextBoard(int column, Action action, boolean player){
+	public BoardState nextBoard(int column, int action, boolean player){
 		BoardState nextB = new BoardState(this.board);
 		//System.err.print(nextB.board[this.height-1][column]);
 		//System.err.println(this.height);

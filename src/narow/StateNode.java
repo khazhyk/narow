@@ -12,7 +12,7 @@ public class StateNode {
 	ArrayList <StateNode> nextState;
 	Config c;
 	int nextMove;
-	Action nextAction;
+	int nextAction;
 	
 	public StateNode(BoardState state, Boolean player) {
 		this.current = state;

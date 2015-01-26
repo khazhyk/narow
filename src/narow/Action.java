@@ -1,6 +1,6 @@
 package narow;
 
-public enum Action {
-    PopOut,
-    Place
+public class Action {
+    public static final int PopOut = 0;
+    public static final int Place = 1;
 }
