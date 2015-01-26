@@ -109,17 +109,18 @@ public class BoardState{
 		
 		if (narow[0][c.arow - 1] > 0 ^ narow[1][c.arow - 1] > 0) { // Exactly one winner
 	    	return ((narow[0][c.arow - 1] > 0) ? Integer.MAX_VALUE : Integer.MIN_VALUE);
+	    } else if (narow[0][c.arow - 1] > 0 && narow[1][c.arow - 1] > 0) { // Zero on tie
+	        return 0;
 	    }
 	   
 		int guess = 0;
-		
 		
 		for (int i = c.arow; i > 0; i--) {
 			int ourMult = isMaxLevel ? i : i+1;
 			int theirMult = isMaxLevel ? i+1 : i;
 			
-			guess += (ourMult*ourMult*ourMult) * narow[0][i-1] * ((playerToMove == Player.US) ? 2 : 1);
-			guess -= (theirMult*theirMult*theirMult) * narow[1][i-1] * ((playerToMove == Player.THEM) ? 2 : 1);
+			guess += (ourMult*ourMult) * narow[0][i-1] * ((playerToMove == Player.US) ? 2 : 1);
+			guess -= (theirMult*theirMult) * narow[1][i-1] * ((playerToMove == Player.THEM) ? 2 : 1);
 		}
 		
 		return guess;
