@@ -78,7 +78,8 @@ public class ID_DFS {
     }
     
     public int calcValue(BoardState bs, int depth, boolean isMaxLevel, boolean canPopUs, boolean canPopThem, int alpha, int beta) {
-        int hval = bs.genHVal(ps.config, isMaxLevel);
+        //int hval = bs.genHVal(ps.config, isMaxLevel);
+        int hval = bs.countPossibleNARows(ps.config);
         if (depth == 0 || hval == Integer.MAX_VALUE || hval == Integer.MIN_VALUE) {
             return hval;
         }

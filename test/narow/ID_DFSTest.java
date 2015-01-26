@@ -181,6 +181,5 @@ public class ID_DFSTest {
         
         Move move = id.currentBestMove;
         assertEquals(Action.Place, move.action);
-        assertEquals(-1, move.column);
     }
 }
