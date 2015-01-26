@@ -62,7 +62,6 @@ public class ID_DFSTest {
         assertEquals(0, id.findBestMove(board, 1, true, true, true).column);
     }
     
-    
     @Test
     public void test3InARow4by4() {
         BoardState board = new BoardState(4,4);

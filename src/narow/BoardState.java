@@ -55,6 +55,7 @@ public class BoardState{
 	        String[] ent =  rows[x].split(" ");
 	        for (int y = 0; y < ent.length; y++ ) {
 	            board[x][y] = Integer.parseInt(ent[y]);
+	            if (board[x][y] == 9) board[x][y] = 0;
 	        }
 	    }
 	}
@@ -113,8 +114,8 @@ public class BoardState{
 		int guess = 0;
 		
 		for (int i = c.arow; i > 0; i--) {
-			guess += (i*i) * narow[0][i-1] * ((playerToMove == Player.US) ? 2 : 1);
-			guess -= (i*i) * narow[1][i-1] * ((playerToMove == Player.THEM) ? 2 : 1);
+			guess += (i*i*i) * narow[0][i-1] * ((playerToMove == Player.US) ? 2 : 1);
+			guess -= ((i+1)*(i+1)*(i+1)) * narow[1][i-1] * ((playerToMove == Player.THEM) ? 2 : 1);
 		}
 		
 		return guess;

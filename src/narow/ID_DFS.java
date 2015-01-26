@@ -26,7 +26,7 @@ public class ID_DFS {
                 int next = calcValue(bs.nextBoard(i, Action.Place, playerToMove),
                         depth - 1, !isMaxLevel, canPopUs, canPopThem);
                 
-                if (isMaxLevel ? (next > bestScore) : (next < bestScore)) {
+                if (isMaxLevel ? (next >= bestScore) : (next <= bestScore)) {
                     bestScore = next;
                     bestMove = new Move(i, Action.Place);
                 }
@@ -43,7 +43,7 @@ public class ID_DFS {
                 int next = calcValue(bs.nextBoard(i, Action.PopOut, playerToMove),
                         depth - 1, !isMaxLevel, isMaxLevel ? false : canPopUs, isMaxLevel ? canPopThem : false, alpha, beta);
                 
-                if (isMaxLevel ? (next > bestScore) : (next < bestScore)) {
+                if (isMaxLevel ? (next >= bestScore) : (next <= bestScore)) {
                     bestScore = next;
                     bestMove = new Move(i, Action.PopOut);
                 }
@@ -81,7 +81,7 @@ public class ID_DFS {
                 int next = calcValue(bs.nextBoard(i, Action.Place, playerToMove),
                         depth - 1, !isMaxLevel, canPopUs, canPopThem, alpha, beta);
                 
-                if (isMaxLevel ? (next > bestScore) : (next < bestScore)) {
+                if (isMaxLevel ? (next >= bestScore) : (next <= bestScore)) {
                     bestScore = next;
                 }
                 if (isMaxLevel ? (bestScore >= beta) : (bestScore <= alpha)) {
@@ -97,7 +97,7 @@ public class ID_DFS {
                 int next = calcValue(bs.nextBoard(i, Action.PopOut, playerToMove),
                         depth - 1, !isMaxLevel, isMaxLevel ? false : canPopUs, isMaxLevel ? canPopThem : false, alpha, beta);
                 
-                if (isMaxLevel ? (next > bestScore) : (next < bestScore)) {
+                if (isMaxLevel ? (next >= bestScore) : (next <= bestScore)) {
                     bestScore = next;
                 }
                 if (isMaxLevel ? (bestScore >= beta) : (bestScore <= alpha)) {
