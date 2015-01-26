@@ -3,6 +3,8 @@ package narow;
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 class PlayerState {
 	
@@ -37,9 +39,21 @@ class PlayerState {
 	 * @throws IOException
 	 */
 	void makeMove() throws IOException {
-		Move move = search.findBestMove(bs, 9, true, !weUsedPopout, !theyUsedPopout);
-		System.out.println(move);
+		Runnable searchForMove = new Runnable() {
+		    @Override
+		    public void run() {
+		        search.iterativeDeepeningBestMove(bs, !weUsedPopout, !theyUsedPopout);
+		    }
+		};
+	    
+		try {
+		    Thread thread = new Thread(searchForMove);
+            thread.start();
+            thread.join(1000*config.timelimit);
+        } catch (InterruptedException e) {
+        }
 		
+		Move move = search.currentBestMove;
 		if (move.action == Action.PopOut) weUsedPopout = true;
 		bs = bs.nextBoard(move.column, move.action, Player.US);
 	}
