@@ -16,7 +16,7 @@ public class ID_DFS {
     boolean abort = false;
     
     public Move iterativeDeepeningBestMove(BoardState bs, boolean canPopUs, boolean canPopThem) {
-        for (int i = 1; ; i++) {
+        for (int i = 1; ; i+= 2) {
             currentBestMove = findBestMove(bs, i, true, canPopUs, canPopThem);
             if (currentBestMove.score == Integer.MAX_VALUE) return currentBestMove;
             if (abort) return currentBestMove;
