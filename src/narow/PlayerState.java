@@ -16,6 +16,8 @@ class PlayerState {
 	
 	BoardState bs;
 	
+	ID_DFS search = new ID_DFS(this);
+	
 	List<BoardState> bestPath;
 	
 	/**
@@ -25,6 +27,7 @@ class PlayerState {
 	 * @param isPlayerOne True if player 1 is acting, false otherwise
 	 */
 	void updateBoard(int column, int action, int player) {
+		if (action == Action.PopOut) theyUsedPopout = true;
 	    bs = bs.nextBoard(column, action, player);
 	}
 	
@@ -34,8 +37,9 @@ class PlayerState {
 	 * @throws IOException
 	 */
 	void makeMove() throws IOException {
+		Move move = search.findBestMove(bs, 4, true, !weUsedPopout, !theyUsedPopout);
 		
-		
-		System.out.println(random.nextInt(config.width) + " 1");
+		if (move.action == Action.PopOut) weUsedPopout = true;
+		System.out.println(move);
 	}
 }

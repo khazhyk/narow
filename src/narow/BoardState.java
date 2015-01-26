@@ -68,6 +68,7 @@ public class BoardState{
 	 */
 	public BoardState nextBoard(int column, int action, int player){
 		BoardState nextB = new BoardState(this.board);
+		nextB.playerToMove = (player == Player.US) ? Player.THEM : Player.US; 
 		//System.err.print(nextB.board[this.height-1][column]);
 		//System.err.println(this.height);
 		//System.err.println(action);
@@ -109,7 +110,14 @@ public class BoardState{
 	    	return ((narow[0][c.arow - 1] > 0) ? Integer.MAX_VALUE : Integer.MIN_VALUE);
 	    }
 	   
-		return 0; // Multiple winners or no winners is a tie
+		int guess = 0;
+		
+		for (int i = c.arow; i > 0; i--) {
+			guess += (i*i) * narow[0][i-1] * ((playerToMove == Player.US) ? 2 : 1);
+			guess -= (i*i) * narow[1][i-1] * ((playerToMove == Player.THEM) ? 2 : 1);
+		}
+		
+		return guess;
 	}
 	
 	/**

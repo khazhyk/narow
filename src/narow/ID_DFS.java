@@ -12,6 +12,55 @@ public class ID_DFS {
         this.ps = playerState;
     }
     
+    public Move findBestMove(BoardState bs, int depth, boolean isMaxLevel, boolean canPopUs, boolean canPopThem) {
+    	Move bestMove = new Move(0, Action.Place);
+    	int bestScore = isMaxLevel ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+    	
+    	int playerToMove = isMaxLevel ? Player.US : Player.THEM;
+    	boolean canPop = isMaxLevel ? canPopUs : canPopThem;
+    	int alpha = Integer.MIN_VALUE;
+    	int beta = Integer.MAX_VALUE;
+    	
+    	for (int i = 0; i < bs.width; i++) {
+            if (bs.board[0][i] == Player.NONE) {
+                int next = calcValue(bs.nextBoard(i, Action.Place, playerToMove),
+                        depth - 1, !isMaxLevel, canPopUs, canPopThem);
+                
+                if (isMaxLevel ? (next > bestScore) : (next < bestScore)) {
+                    bestScore = next;
+                    bestMove = new Move(i, Action.Place);
+                }
+                if (isMaxLevel ? (bestScore >= beta) : (bestScore <= alpha)) {
+                    return bestMove;
+                }
+                if (isMaxLevel && (bestScore > alpha)) {
+                    alpha = bestScore;
+                } else if (!isMaxLevel && bestScore < beta) {
+                    beta = bestScore;
+                }
+            }
+            if (canPop && bs.board[bs.height - 1][i] == playerToMove) {
+                int next = calcValue(bs.nextBoard(i, Action.PopOut, playerToMove),
+                        depth - 1, !isMaxLevel, isMaxLevel ? false : canPopUs, isMaxLevel ? canPopThem : false, alpha, beta);
+                
+                if (isMaxLevel ? (next > bestScore) : (next < bestScore)) {
+                    bestScore = next;
+                    bestMove = new Move(i, Action.PopOut);
+                }
+                if (isMaxLevel ? (bestScore >= beta) : (bestScore <= alpha)) {
+                    return bestMove;
+                }
+                if (isMaxLevel && (bestScore > alpha)) {
+                    alpha = bestScore;
+                } else if (!isMaxLevel && bestScore < beta) {
+                    beta = bestScore;
+                }
+            }
+        }
+    	
+		return bestMove;
+    }
+    
     public int calcValue(BoardState bs, int depth, boolean isMaxLevel, boolean canPopUs, boolean canPopThem) {
         return calcValue(bs, depth, isMaxLevel, canPopUs, canPopThem, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
@@ -42,7 +91,7 @@ public class ID_DFS {
                 }
                 if (isMaxLevel && (bestScore > alpha)) {
                     alpha = bestScore;
-                } else if (bestScore < beta) {
+                } else if (!isMaxLevel && bestScore < beta) {
                     beta = bestScore;
                 }
             }
@@ -59,7 +108,7 @@ public class ID_DFS {
                 }
                 if (isMaxLevel && (bestScore > alpha)) {
                     alpha = bestScore;
-                } else if (bestScore < beta) {
+                } else if (!isMaxLevel && bestScore < beta) {
                     beta = bestScore;
                 }
             }

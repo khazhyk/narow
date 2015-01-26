@@ -31,6 +31,19 @@ public class ID_DFSTest {
     }
     
     @Test
+    public void testCenterBestMove() {
+    	BoardState board = new BoardState(6,7);
+    	board.playerToMove = Player.US;
+        
+        PlayerState p = new PlayerState();
+        p.config = new Config("6 7 4 1 15");
+        
+        ID_DFS id = new ID_DFS(p);
+        
+        assertEquals(3, id.findBestMove(board, 1, true, true, true).column);
+    }
+    
+    @Test
     public void test3InARow4by4() {
         BoardState board = new BoardState(6,7);
         
@@ -39,6 +52,6 @@ public class ID_DFSTest {
         
         ID_DFS id = new ID_DFS(p);
         
-        assertEquals(Integer.MAX_VALUE, id.calcValue(board, Integer.MAX_VALUE, true, false, false));
+        assertEquals(Integer.MAX_VALUE, id.calcValue(board, 4, true, true, true));
     }
 }
