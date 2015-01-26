@@ -104,7 +104,7 @@ public class BoardState{
 		return nextB;
 	}
 	
-	public int genHVal(Config c) {
+	public int genHVal(Config c, boolean isMaxLevel) {
 		final int[][] narow = traverse(c, Player.US); // we're always max
 		
 		if (narow[0][c.arow - 1] > 0 ^ narow[1][c.arow - 1] > 0) { // Exactly one winner
@@ -113,9 +113,13 @@ public class BoardState{
 	   
 		int guess = 0;
 		
+		
 		for (int i = c.arow; i > 0; i--) {
-			guess += (i*i*i) * narow[0][i-1] * ((playerToMove == Player.US) ? 2 : 1);
-			guess -= ((i+1)*(i+1)*(i+1)) * narow[1][i-1] * ((playerToMove == Player.THEM) ? 2 : 1);
+			int ourMult = isMaxLevel ? i : i+1;
+			int theirMult = isMaxLevel ? i+1 : i;
+			
+			guess += (ourMult*ourMult*ourMult) * narow[0][i-1] * ((playerToMove == Player.US) ? 2 : 1);
+			guess -= (theirMult*theirMult*theirMult) * narow[1][i-1] * ((playerToMove == Player.THEM) ? 2 : 1);
 		}
 		
 		return guess;

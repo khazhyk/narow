@@ -63,6 +63,41 @@ public class ID_DFSTest {
     }
     
     @Test
+    public void testBest2Move() {
+    	BoardState bs = new BoardState(
+    			"9 9 9 9 9 9 9",
+    			"9 9 9 9 1 9 9",
+    			"9 9 9 9 2 9 9",
+    			"9 9 9 1 2 9 9",
+    			"9 9 9 2 1 9 2",
+    			"1 1 9 1 1 9 2");
+    	
+    	BoardState bsb = new BoardState(
+    			"9 9 9 9 9 9 9",
+    			"9 9 9 9 1 9 9",
+    			"9 9 9 9 2 9 9",
+    			"9 9 9 1 2 9 9",
+    			"1 9 9 2 1 9 2",
+    			"1 1 9 1 1 9 2");
+    	
+    	BoardState bsg = new BoardState(
+    			"9 9 9 9 9 9 9",
+    			"9 9 9 9 1 9 9",
+    			"9 9 9 9 2 9 9",
+    			"9 9 9 1 2 9 9",
+    			"9 9 9 2 1 9 2",
+    			"1 1 1 1 1 9 2");
+    	PlayerState p = new PlayerState();
+    	p.config = new Config("6 7 4 1 15");
+    	
+    	ID_DFS id = new ID_DFS(p);
+        
+    	assertNotEquals(Integer.MAX_VALUE, bsb.genHVal(p.config, false));
+    	assertEquals(Integer.MAX_VALUE, bsg.genHVal(p.config, false));
+        assertEquals(2, id.findBestMove(bs, 9, true, true, true).column);
+    }
+    
+    @Test
     public void test3InARow4by4() {
         BoardState board = new BoardState(4,4);
         

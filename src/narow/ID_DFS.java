@@ -66,7 +66,7 @@ public class ID_DFS {
     }
     
     public int calcValue(BoardState bs, int depth, boolean isMaxLevel, boolean canPopUs, boolean canPopThem, int alpha, int beta) {
-        int hval = bs.genHVal(ps.config);
+        int hval = bs.genHVal(ps.config, isMaxLevel);
         if (depth == 0 || hval == Integer.MAX_VALUE || hval == Integer.MIN_VALUE) {
             return hval;
         }
@@ -84,6 +84,8 @@ public class ID_DFS {
                 if (isMaxLevel ? (next >= bestScore) : (next <= bestScore)) {
                     bestScore = next;
                 }
+                
+                
                 if (isMaxLevel ? (bestScore >= beta) : (bestScore <= alpha)) {
                     return bestScore;
                 }
@@ -100,6 +102,8 @@ public class ID_DFS {
                 if (isMaxLevel ? (next >= bestScore) : (next <= bestScore)) {
                     bestScore = next;
                 }
+                
+                
                 if (isMaxLevel ? (bestScore >= beta) : (bestScore <= alpha)) {
                     return bestScore;
                 }
