@@ -44,14 +44,16 @@ class PlayerState {
 		    }
 		};
 	    
+
+        Thread thread = new Thread(searchForMove);
+        thread.start();
 		try {
-		    Thread thread = new Thread(searchForMove);
-            thread.start();
-            thread.join(1000*config.timelimit);
+            thread.join(1000*config.timelimit); // 100ms breathing room
         } catch (InterruptedException e) {
         }
 		
 		Move move = search.currentBestMove;
+		System.out.println(move);
 		if (move.action == Action.PopOut) weUsedPopout = true;
 		bs = bs.nextBoard(move.column, move.action, Player.US);
 	}
