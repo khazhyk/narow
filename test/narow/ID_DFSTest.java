@@ -46,14 +46,17 @@ public class ID_DFSTest {
                 id.iterativeDeepeningBestMove(board, true, true);
             }
         };
+
+        Thread thread = new Thread(searchForMove);
+        thread.start();
         
         try {
-            Thread thread = new Thread(searchForMove);
-            thread.start();
             thread.join(1000*p.config.timelimit);
         } catch (InterruptedException e) {
             throw new RuntimeException();
         }
+        
+        assert(thread.getState() == Thread.State.TERMINATED);
         
         Move move = id.currentBestMove;
         assertEquals(3, move.column);
@@ -118,14 +121,16 @@ public class ID_DFSTest {
                 id.iterativeDeepeningBestMove(bs, true, true);
             }
         };
+        Thread thread = new Thread(searchForMove);
+        thread.start();
         
     	try {
-            Thread thread = new Thread(searchForMove);
-            thread.start();
             thread.join(1000*p.config.timelimit);
         } catch (InterruptedException e) {
             throw new RuntimeException();
         }
+    	
+    	assert(thread.getState() == Thread.State.TERMINATED);
         
         Move move = id.currentBestMove;
         assertEquals(2, move.column);
