@@ -18,6 +18,8 @@ class PlayerState {
 	
 	ID_DFS search = new ID_DFS(this);
 	
+	Thread moveThread = new Thread();
+	
 	List<BoardState> bestPath;
 	
 	/**
@@ -43,14 +45,17 @@ class PlayerState {
 		        search.iterativeDeepeningBestMove(bs, !weUsedPopout, !theyUsedPopout);
 		    }
 		};
-	    
-
+		
         Thread thread = new Thread(searchForMove);
         thread.start();
 		try {
-            thread.join(1000*config.timelimit); // 100ms breathing room
+            thread.join(1000*config.timelimit - 100); // 100ms breathing room
         } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
+		
+		thread.interrupt();
+		thread.stop();
 		
 		Move move = search.currentBestMove;
 		System.out.println(move);

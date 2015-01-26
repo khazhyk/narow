@@ -147,4 +147,40 @@ public class ID_DFSTest {
         
         assertEquals(Integer.MAX_VALUE, id.calcValue(board, Integer.MAX_VALUE, true, true, true));
     }
+    
+    @Test
+    public void testinvalidmove() {
+        final BoardState bs = new BoardState(
+                "9 9 9 9 9 9 9",
+                "9 9 9 9 9 9 9",
+                "9 9 9 9 9 9 1",
+                "9 9 9 1 9 2 2",
+                "9 9 2 2 9 1 2",
+                "9 9 2 1 9 1 2");
+        PlayerState p = new PlayerState();
+        p.config = new Config("6 7 4 1 3");
+        
+        final ID_DFS id = new ID_DFS(p);
+        
+        Runnable searchForMove = new Runnable() {
+            @Override
+            public void run() {
+                id.iterativeDeepeningBestMove(bs, false, true);
+            }
+        };
+        Thread thread = new Thread(searchForMove);
+        thread.start();
+        
+        try {
+            thread.join(1000*p.config.timelimit - 100);
+        } catch (InterruptedException e) {
+            throw new RuntimeException();
+        }
+        
+        assert(thread.getState() == Thread.State.TERMINATED);
+        
+        Move move = id.currentBestMove;
+        assertEquals(Action.Place, move.action);
+        assertEquals(-1, move.column);
+    }
 }
