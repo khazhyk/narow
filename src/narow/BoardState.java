@@ -103,6 +103,17 @@ public class BoardState{
 		return nextB;
 	}
 	
+	/*public int genHVal2(Config c){
+		int openruns = 0;
+		for (int h = 0; h<height; h++){
+		for (int w = 0; w<width-c.arow+1; w++){
+			if (!((board[w][h]||board[w+1][h]||board[w+2][h]||board[w+3][h]) == playerToMove));
+		}
+		}
+		return openruns;
+	}*/
+	
+	
 	public int genHVal(Config c) {
 		final int[][] narow = traverse(c, Player.US); // we're always max
 		
