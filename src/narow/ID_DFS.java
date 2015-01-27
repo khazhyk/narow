@@ -26,7 +26,7 @@ public class ID_DFS {
                 int next = calcValue(bs.nextBoard(i, Action.Place, playerToMove),
                         depth - 1, !isMaxLevel, canPopUs, canPopThem);
                 
-                if (isMaxLevel ? (next > bestScore) : (next < bestScore)) {
+                if (isMaxLevel ? (next >= bestScore) : (next <= bestScore)) {
                     bestScore = next;
                     bestMove = new Move(i, Action.Place);
                 }
@@ -43,7 +43,7 @@ public class ID_DFS {
                 int next = calcValue(bs.nextBoard(i, Action.PopOut, playerToMove),
                         depth - 1, !isMaxLevel, isMaxLevel ? false : canPopUs, isMaxLevel ? canPopThem : false, alpha, beta);
                 
-                if (isMaxLevel ? (next > bestScore) : (next < bestScore)) {
+                if (isMaxLevel ? (next >= bestScore) : (next <= bestScore)) {
                     bestScore = next;
                     bestMove = new Move(i, Action.PopOut);
                 }
@@ -66,7 +66,7 @@ public class ID_DFS {
     }
     
     public int calcValue(BoardState bs, int depth, boolean isMaxLevel, boolean canPopUs, boolean canPopThem, int alpha, int beta) {
-        int hval = bs.genHVal(ps.config);
+        int hval = bs.genHVal(ps.config, isMaxLevel);
         if (depth == 0 || hval == Integer.MAX_VALUE || hval == Integer.MIN_VALUE) {
             return hval;
         }
@@ -81,9 +81,11 @@ public class ID_DFS {
                 int next = calcValue(bs.nextBoard(i, Action.Place, playerToMove),
                         depth - 1, !isMaxLevel, canPopUs, canPopThem, alpha, beta);
                 
-                if (isMaxLevel ? (next > bestScore) : (next < bestScore)) {
+                if (isMaxLevel ? (next >= bestScore) : (next <= bestScore)) {
                     bestScore = next;
                 }
+                
+                
                 if (isMaxLevel ? (bestScore >= beta) : (bestScore <= alpha)) {
                     return bestScore;
                 }
@@ -97,9 +99,11 @@ public class ID_DFS {
                 int next = calcValue(bs.nextBoard(i, Action.PopOut, playerToMove),
                         depth - 1, !isMaxLevel, isMaxLevel ? false : canPopUs, isMaxLevel ? canPopThem : false, alpha, beta);
                 
-                if (isMaxLevel ? (next > bestScore) : (next < bestScore)) {
+                if (isMaxLevel ? (next >= bestScore) : (next <= bestScore)) {
                     bestScore = next;
                 }
+                
+                
                 if (isMaxLevel ? (bestScore >= beta) : (bestScore <= alpha)) {
                     return bestScore;
                 }

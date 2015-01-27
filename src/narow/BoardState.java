@@ -55,6 +55,7 @@ public class BoardState{
 	        String[] ent =  rows[x].split(" ");
 	        for (int y = 0; y < ent.length; y++ ) {
 	            board[x][y] = Integer.parseInt(ent[y]);
+	            if (board[x][y] == 9) board[x][y] = 0;
 	        }
 	    }
 	}
@@ -103,7 +104,7 @@ public class BoardState{
 		return nextB;
 	}
 	
-	/*public int genHVal2(Config c){
+	public int genHVal(Config c, boolean isMaxLevel) {
 		int openruns = 0;
 		for (int h = 0; h<height; h++){
 		for (int w = 0; w<width-c.arow+1; w++){
@@ -114,7 +115,6 @@ public class BoardState{
 	}*/
 	
 	
-	public int genHVal(Config c) {
 		final int[][] narow = traverse(c, Player.US); // we're always max
 		
 		if (narow[0][c.arow - 1] > 0 ^ narow[1][c.arow - 1] > 0) { // Exactly one winner
@@ -123,9 +123,13 @@ public class BoardState{
 	   
 		int guess = 0;
 		
+		
 		for (int i = c.arow; i > 0; i--) {
-			guess += (i*i) * narow[0][i-1] * ((playerToMove == Player.US) ? 2 : 1);
-			guess -= (i*i) * narow[1][i-1] * ((playerToMove == Player.THEM) ? 2 : 1);
+			int ourMult = isMaxLevel ? i : i+1;
+			int theirMult = isMaxLevel ? i+1 : i;
+			
+			guess += (ourMult*ourMult*ourMult) * narow[0][i-1] * ((playerToMove == Player.US) ? 2 : 1);
+			guess -= (theirMult*theirMult*theirMult) * narow[1][i-1] * ((playerToMove == Player.THEM) ? 2 : 1);
 		}
 		
 		return guess;
