@@ -106,14 +106,7 @@ public class BoardState{
 	
 	public int genHVal(Config c, boolean isMaxLevel) {
 		final int[][] narow = countNARows(c, Player.US); // we're always max
-		for (int h = 0; h<height; h++){
-		for (int w = 0; w<width-c.arow+1; w++){
-			if (!((board[w][h]||board[w+1][h]||board[w+2][h]||board[w+3][h]) == playerToMove));
-		}
-		}
-		return openruns;
-	}*/
-	
+		
 	
 		
 		if (narow[0][c.arow - 1] > 0 ^ narow[1][c.arow - 1] > 0) { // Exactly one winner
