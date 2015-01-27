@@ -17,29 +17,32 @@ public class App {
 		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 		int heuristicToUse = 0;
 		
+		if (args.length > 0) {
+            try {
+            heuristicToUse = Integer.parseInt(args[0]);
+            } finally {}
+        }
+		
 		System.out.println(player.playerName);
 		
 		// Parse player info - this is always sent first, always format `player1: aa player2: bb`
 	    player.arePlayerOne = input.readLine().split(" ")[1].equals(player.playerName);
 		
-		
+	    
+	    
 		// Parse config info
 		player.config = new Config(input.readLine());
-		if (args.length > 0) {
-		    try {
-		    heuristicToUse = Integer.parseInt(args[0]);
-		    } finally {}
-		}
 		
-		switch (heuristicToUse) {
-		default:
-		case 0:
-		    player.h = new CountNARowsCalculator(player.config);
-		    break;
-		case 1:
-		    player.h = new PossibleNARowsCalculator(player.config);
-		}
-		
+        
+        switch (heuristicToUse) {
+        default:
+        case 0:
+            player.h = new CountNARowsCalculator(player.config);
+            break;
+        case 1:
+            player.h = new PossibleNARowsCalculator(player.config);
+        }
+        
 		
 		player.bs = new BoardState(player.config.height, player.config.width);
 		
