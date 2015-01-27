@@ -210,4 +210,17 @@ public class BoardStateTest {
     	System.out.println(board.board[5][3]);
     	assertEquals(board.nextBoard(3, Action.PopOut, Player.US).board[5][3], Player.THEM);
     }
+    
+    @Test
+    public void testExpHVal(){
+    	BoardState board = new BoardState(
+   			 	"0 0 0 0 0",
+                "0 0 0 0 0",
+                "0 0 0 0 0",
+                "0 1 1 2 0"
+                );
+    	
+    	Config c = new Config("4 5 4 1 15");
+        assertEquals(12, board.genHVal2(c,2));
+    }
 }

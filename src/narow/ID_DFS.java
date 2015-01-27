@@ -25,6 +25,7 @@ public class ID_DFS {
             if (bs.board[0][i] == Player.NONE) {
                 int next = calcValue(bs.nextBoard(i, Action.Place, playerToMove),
                         depth - 1, !isMaxLevel, canPopUs, canPopThem);
+                System.out.println(depth+"  "+i+"   "+next);
                 
                 if (isMaxLevel ? (next >= bestScore) : (next <= bestScore)) {
                     bestScore = next;
@@ -42,7 +43,7 @@ public class ID_DFS {
             if (canPop && bs.board[bs.height - 1][i] == playerToMove) {
                 int next = calcValue(bs.nextBoard(i, Action.PopOut, playerToMove),
                         depth - 1, !isMaxLevel, isMaxLevel ? false : canPopUs, isMaxLevel ? canPopThem : false, alpha, beta);
-                
+                System.out.println(depth+"  "+i+"   "+next+"pop");
                 if (isMaxLevel ? (next >= bestScore) : (next <= bestScore)) {
                     bestScore = next;
                     bestMove = new Move(i, Action.PopOut);
@@ -57,7 +58,7 @@ public class ID_DFS {
                 }
             }
         }
-    	
+    	//System.out.println(bestScore);
 		return bestMove;
     }
     
@@ -80,7 +81,7 @@ public class ID_DFS {
             if (bs.board[0][i] == Player.NONE) {
                 int next = calcValue(bs.nextBoard(i, Action.Place, playerToMove),
                         depth - 1, !isMaxLevel, canPopUs, canPopThem, alpha, beta);
-                
+                System.out.println(depth+"  "+i+"   "+next);
                 if (isMaxLevel ? (next >= bestScore) : (next <= bestScore)) {
                     bestScore = next;
                 }
