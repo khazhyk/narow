@@ -144,7 +144,6 @@ public class BoardState{
 				openruns++;
 		}
 		}
-		System.out.println("runs "+openruns);
 
 		// open horizontal runs
 		for (int h = 0; h < height - c.arow + 1; h++) {
@@ -159,7 +158,6 @@ public class BoardState{
 					openruns++;
 			}
 		}
-		System.out.println("runs "+openruns);
 
 		// opendiagonals (left to right)
 		for (int w = 0; w < width - c.arow + 1; w++) {
@@ -175,7 +173,6 @@ public class BoardState{
 					openruns++;
 			}
 		}
-		System.out.println("runs "+openruns);
 
 		// opendiagonals (right to left)
 		for (int w = c.arow-1; w < width; w++) {
@@ -191,7 +188,6 @@ public class BoardState{
 					openruns++;
 			}
 		}
-		System.out.println("runs "+openruns);
 
 		return openruns;
 

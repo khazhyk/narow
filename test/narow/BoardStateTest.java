@@ -128,12 +128,6 @@ public class BoardStateTest {
     
     @Test
     public void testSmallerBoardWin() {
-        BoardState board = new BoardState(
-                "0 0 0 0",
-                "0 0 0 0",
-                "0 0 0 0"
-                );
-        
         BoardState board2 = new BoardState(
                 "0 0 0 1",
                 "0 1 1 2",
@@ -155,13 +149,6 @@ public class BoardStateTest {
     
     @Test
     public void testTallWin() {
-    	BoardState board = new BoardState(
-                "0 0 0 0",
-                "0 0 0 0",
-                "0 0 0 0",
-                "0 0 0 0",
-                "0 0 0 0"
-                );
     	BoardState board2 = new BoardState(
                 "0 0 0 0",
                 "1 0 0 0",
