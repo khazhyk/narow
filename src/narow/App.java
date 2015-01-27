@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import narow.heuristics.CountNARowsCalculator;
+import narow.heuristics.PossibleNARowsCalculator;
 import narow.state.Config;
 import narow.state.Player;
 
@@ -13,6 +15,7 @@ public class App {
 		PlayerState player = new PlayerState();
 		String inLine = "";
 		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+		int heuristicToUse = 0;
 		
 		System.out.println(player.playerName);
 		
@@ -22,6 +25,22 @@ public class App {
 		
 		// Parse config info
 		player.config = new Config(input.readLine());
+		if (args.length > 0) {
+		    try {
+		    heuristicToUse = Integer.parseInt(args[0]);
+		    } finally {}
+		}
+		
+		switch (heuristicToUse) {
+		default:
+		case 0:
+		    player.h = new CountNARowsCalculator(player.config);
+		    break;
+		case 1:
+		    player.h = new PossibleNARowsCalculator(player.config);
+		}
+		
+		
 		player.bs = new BoardState(player.config.height, player.config.width);
 		
 		if (player.config.playerGoesFirst == (player.arePlayerOne ? 1 : 2)) {

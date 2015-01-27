@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
-import narow.heuristics.CountNARowsCalculator;
+import narow.heuristics.Heuristic;
 import narow.state.Action;
 import narow.state.Config;
 import narow.state.Player;
@@ -24,6 +24,8 @@ class PlayerState {
 	ID_DFS search = new ID_DFS(this);
 	
 	Thread moveThread = new Thread();
+	
+	Heuristic h;
 	
 	List<BoardState> bestPath;
 	
@@ -48,7 +50,7 @@ class PlayerState {
 		Runnable searchForMove = new Runnable() {
 		    @Override
 		    public void run() {
-		        search.iterativeDeepeningBestMove(new CountNARowsCalculator(config), bs, !weUsedPopout, !theyUsedPopout);
+		        search.iterativeDeepeningBestMove(h, bs, !weUsedPopout, !theyUsedPopout);
 		    }
 		};
 		
