@@ -98,7 +98,6 @@ public class ID_DFS {
                     bestScore = next;
                 }
                 
-                
                 if (isMaxLevel ? (bestScore >= beta) : (bestScore <= alpha)) {
                     return bestScore;
                 }
