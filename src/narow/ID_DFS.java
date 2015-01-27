@@ -1,5 +1,9 @@
 package narow;
 
+import narow.heuristics.Heuristic;
+import narow.state.Action;
+import narow.state.Player;
+
 public class ID_DFS {
 
     PlayerState ps;
@@ -15,15 +19,15 @@ public class ID_DFS {
     Move currentBestMove;
     boolean abort = false;
     
-    public Move iterativeDeepeningBestMove(BoardState bs, boolean canPopUs, boolean canPopThem) {
+    public Move iterativeDeepeningBestMove(Heuristic h, BoardState bs, boolean canPopUs, boolean canPopThem) {
         for (int i = 1; ; i+= 2) {
-            currentBestMove = findBestMove(bs, i, true, canPopUs, canPopThem);
+            currentBestMove = findBestMove(h, bs, i, true, canPopUs, canPopThem);
             if (currentBestMove.score == Integer.MAX_VALUE) return currentBestMove;
             if (abort) return currentBestMove;
         }
     }
     
-    public Move findBestMove(BoardState bs, int depth, boolean isMaxLevel, boolean canPopUs, boolean canPopThem) {
+    public Move findBestMove(Heuristic h, BoardState bs, int depth, boolean isMaxLevel, boolean canPopUs, boolean canPopThem) {
     	Move bestMove = null;
     	int bestScore = isMaxLevel ? Integer.MIN_VALUE : Integer.MAX_VALUE;
     	
@@ -34,7 +38,7 @@ public class ID_DFS {
     	
     	for (int i = 0; i < bs.width; i++) {
             if (bs.board[0][i] == Player.NONE) {
-                int next = calcValue(bs.nextBoard(i, Action.Place, playerToMove),
+                int next = calcValue(h, bs.nextBoard(i, Action.Place, playerToMove),
                         depth - 1, !isMaxLevel, canPopUs, canPopThem);
                 System.out.println(depth+"  "+i+"   "+next);
                 
@@ -53,7 +57,7 @@ public class ID_DFS {
                 }
             }
             if (canPop && bs.board[bs.height - 1][i] == playerToMove) {
-                int next = calcValue(bs.nextBoard(i, Action.PopOut, playerToMove),
+                int next = calcValue(h, bs.nextBoard(i, Action.PopOut, playerToMove),
                         depth - 1, !isMaxLevel, isMaxLevel ? false : canPopUs, isMaxLevel ? canPopThem : false, alpha, beta);
                 System.out.println(depth+"  "+i+"   "+next+"pop");
                 if (isMaxLevel ? (next >= bestScore) : (next <= bestScore)) {
@@ -74,13 +78,13 @@ public class ID_DFS {
 		return bestMove;
     }
     
-    public int calcValue(BoardState bs, int depth, boolean isMaxLevel, boolean canPopUs, boolean canPopThem) {
-        return calcValue(bs, depth, isMaxLevel, canPopUs, canPopThem, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    public int calcValue(Heuristic h, BoardState bs, int depth, boolean isMaxLevel, boolean canPopUs, boolean canPopThem) {
+        return calcValue(h, bs, depth, isMaxLevel, canPopUs, canPopThem, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
     
-    public int calcValue(BoardState bs, int depth, boolean isMaxLevel, boolean canPopUs, boolean canPopThem, int alpha, int beta) {
+    public int calcValue(Heuristic h, BoardState bs, int depth, boolean isMaxLevel, boolean canPopUs, boolean canPopThem, int alpha, int beta) {
         //int hval = bs.genHVal(ps.config, isMaxLevel);
-        int hval = bs.countPossibleNARows(ps.config);
+        int hval = h.calculate(bs);
         if (depth == 0 || hval == Integer.MAX_VALUE || hval == Integer.MIN_VALUE) {
             return hval;
         }
@@ -92,7 +96,7 @@ public class ID_DFS {
         
         for (int i = 0; i < bs.width; i++) {
             if (bs.board[0][i] == Player.NONE) {
-                int next = calcValue(bs.nextBoard(i, Action.Place, playerToMove),
+                int next = calcValue(h, bs.nextBoard(i, Action.Place, playerToMove),
                         depth - 1, !isMaxLevel, canPopUs, canPopThem, alpha, beta);
                 System.out.println(depth+"  "+i+"   "+next);
                 if (isMaxLevel ? (next >= bestScore) : (next <= bestScore)) {
@@ -109,7 +113,7 @@ public class ID_DFS {
                 }
             }
             if (canPop && bs.board[bs.height - 1][i] == playerToMove) {
-                int next = calcValue(bs.nextBoard(i, Action.PopOut, playerToMove),
+                int next = calcValue(h, bs.nextBoard(i, Action.PopOut, playerToMove),
                         depth - 1, !isMaxLevel, isMaxLevel ? false : canPopUs, isMaxLevel ? canPopThem : false, alpha, beta);
                 
                 if (isMaxLevel ? (next >= bestScore) : (next <= bestScore)) {

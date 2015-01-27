@@ -1,6 +1,10 @@
-package narow;
+package narow.heuristics;
 
-public class PossibleNARowsCalculator {
+import narow.BoardState;
+import narow.state.Config;
+import narow.state.Player;
+
+public class PossibleNARowsCalculator implements Heuristic {
 
     Config c;
     

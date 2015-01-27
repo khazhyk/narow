@@ -1,4 +1,4 @@
-package narow;
+package narow.state;
 
 public class Player {
 	public static final int NONE = 0;

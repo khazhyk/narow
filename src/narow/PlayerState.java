@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
+import narow.heuristics.CountNARowsCalculator;
+import narow.state.Action;
+import narow.state.Config;
+import narow.state.Player;
+
 class PlayerState {
 	
 	Config config;
@@ -43,7 +48,7 @@ class PlayerState {
 		Runnable searchForMove = new Runnable() {
 		    @Override
 		    public void run() {
-		        search.iterativeDeepeningBestMove(bs, !weUsedPopout, !theyUsedPopout);
+		        search.iterativeDeepeningBestMove(new CountNARowsCalculator(config), bs, !weUsedPopout, !theyUsedPopout);
 		    }
 		};
 		

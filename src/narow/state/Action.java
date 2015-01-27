@@ -1,4 +1,4 @@
-package narow;
+package narow.state;
 
 public class Action {
     public static final int PopOut = 0;

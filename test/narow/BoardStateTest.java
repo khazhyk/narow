@@ -1,6 +1,11 @@
 package narow;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import narow.heuristics.CountNARowsCalculator;
+import narow.heuristics.Heuristic;
+import narow.state.Action;
+import narow.state.Config;
+import narow.state.Player;
 
 import org.junit.Test;
 
@@ -12,11 +17,13 @@ public class BoardStateTest {
         BoardState board = new BoardState(2,2);
         Config c = new Config("2 2 2 1 15");
         
+        Heuristic h = new CountNARowsCalculator(c);
+        
         board = board.nextBoard(0, Action.Place, Player.US);
         board = board.nextBoard(0, Action.Place, Player.THEM);
         board = board.nextBoard(1, Action.Place, Player.US);
         
-        assertEquals(Integer.MAX_VALUE, board.countPossibleNARows(c));
+        assertEquals(Integer.MAX_VALUE, h.calculate(board));
     }
     
     
@@ -32,8 +39,9 @@ public class BoardStateTest {
                 );
         
         Config c = new Config("6 7 4 1 15");
+        Heuristic h = new CountNARowsCalculator(c);
         
-        assertEquals(Integer.MAX_VALUE, board.countPossibleNARows(c));
+        assertEquals(Integer.MAX_VALUE, h.calculate(board));
     }
     
     @Test
@@ -48,8 +56,9 @@ public class BoardStateTest {
                 );
         
         Config c = new Config("6 7 4 1 15");
+        Heuristic h = new CountNARowsCalculator(c);
         
-        assertEquals(Integer.MAX_VALUE, board.countPossibleNARows(c));
+        assertEquals(Integer.MAX_VALUE, h.calculate(board));
     }
     
     @Test
@@ -74,9 +83,10 @@ public class BoardStateTest {
         
         
         Config c = new Config("6 7 4 1 15");
+        Heuristic h = new CountNARowsCalculator(c);
         
-        assertEquals(Integer.MIN_VALUE, board.countPossibleNARows(c));
-        assertEquals(Integer.MIN_VALUE, board2.countPossibleNARows(c));
+        assertEquals(Integer.MIN_VALUE, h.calculate(board));
+        assertEquals(Integer.MIN_VALUE, h.calculate(board2));
     }
     
     @Test
@@ -109,10 +119,11 @@ public class BoardStateTest {
                 );
         
         Config c = new Config("6 7 4 1 15");
+        Heuristic h = new CountNARowsCalculator(c);
         
-        assertEquals(Integer.MAX_VALUE, board.countPossibleNARows(c));
-        assertEquals(Integer.MAX_VALUE, board2.countPossibleNARows(c));
-        assertEquals(Integer.MAX_VALUE, board3.countPossibleNARows(c));
+        assertEquals(Integer.MAX_VALUE, h.calculate(board));
+        assertEquals(Integer.MAX_VALUE, h.calculate(board2));
+        assertEquals(Integer.MAX_VALUE, h.calculate(board3));
     }
     
     @Test
@@ -136,10 +147,10 @@ public class BoardStateTest {
                 );
         
         Config c = new Config("3 4 3 1 15");
+        Heuristic h = new CountNARowsCalculator(c);
         
-        assertEquals(0, board.countPossibleNARows(c));
-        assertEquals(Integer.MAX_VALUE, board2.countPossibleNARows(c));
-        assertEquals(Integer.MAX_VALUE, board3.countPossibleNARows(c));
+        assertEquals(Integer.MAX_VALUE, h.calculate(board2));
+        assertEquals(Integer.MAX_VALUE, h.calculate(board3));
     }
     
     @Test
@@ -168,10 +179,10 @@ public class BoardStateTest {
         
         
         Config c = new Config("5 4 3 1 15");
+        Heuristic h = new CountNARowsCalculator(c);
         
-        assertEquals(0, board.countPossibleNARows(c));
-        assertEquals(Integer.MAX_VALUE, board2.countPossibleNARows(c));
-        assertEquals(Integer.MAX_VALUE, board3.countPossibleNARows(c));
+        assertEquals(Integer.MAX_VALUE, h.calculate(board2));
+        assertEquals(Integer.MAX_VALUE, h.calculate(board3));
     }
     
     @Test
@@ -185,8 +196,9 @@ public class BoardStateTest {
                 );
         
         Config c = new Config("5 4 3 1 15");
+        CountNARowsCalculator h = new CountNARowsCalculator(c);
         
-        int[][]narow = board3.countNARows(c, Player.US);
+        int[][]narow = h.countNARows(board3);
         
         assertEquals(1, narow[0][2]); // 1 three in a rows
         assertEquals(0, narow[1][2]);
