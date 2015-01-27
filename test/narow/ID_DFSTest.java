@@ -32,15 +32,34 @@ public class ID_DFSTest {
     
     @Test
     public void testCenterBestMove() {
-    	BoardState board = new BoardState(6,7);
+    	final BoardState board = new BoardState(6,7);
     	board.playerToMove = Player.US;
         
-        PlayerState p = new PlayerState();
-        p.config = new Config("6 7 4 1 15");
+        final PlayerState p = new PlayerState();
+        p.config = new Config("6 7 4 1 1");
         
-        ID_DFS id = new ID_DFS(p);
+        final ID_DFS id = new ID_DFS(p);
         
-        //assertEquals(3, id.findBestMove(board, 3, true, true, true).column);
+        Runnable searchForMove = new Runnable() {
+            @Override
+            public void run() {
+                id.iterativeDeepeningBestMove(board, true, true);
+            }
+        };
+
+        Thread thread = new Thread(searchForMove);
+        thread.start();
+        
+        try {
+            thread.join(1000*p.config.timelimit);
+        } catch (InterruptedException e) {
+            throw new RuntimeException();
+        }
+        
+        assert(thread.getState() == Thread.State.TERMINATED);
+        
+        Move move = id.currentBestMove;
+        assertEquals(3, move.column);
     }
     
     @Test
@@ -66,7 +85,7 @@ public class ID_DFSTest {
     
     @Test
     public void testBest2Move() {
-    	BoardState bs = new BoardState(
+    	final BoardState bs = new BoardState(
     			"9 9 9 9 9 9 9",
     			"9 9 9 9 1 9 9",
     			"9 9 9 9 2 9 9",
@@ -92,11 +111,31 @@ public class ID_DFSTest {
     	PlayerState p = new PlayerState();
     	p.config = new Config("6 7 4 1 15");
     	
-    	ID_DFS id = new ID_DFS(p);
+    	final ID_DFS id = new ID_DFS(p);
         
     	//assertNotEquals(Integer.MAX_VALUE, bsb.genHVal(p.config, false));
     	//assertEquals(Integer.MAX_VALUE, bsg.genHVal(p.config, false));
         assertEquals(2, id.findBestMove(bs, 3, true, true, true).column);
+
+        Runnable searchForMove = new Runnable() {
+            @Override
+            public void run() {
+                id.iterativeDeepeningBestMove(bs, true, true);
+            }
+        };
+        Thread thread = new Thread(searchForMove);
+        thread.start();
+        
+    	try {
+            thread.join(1000*p.config.timelimit);
+        } catch (InterruptedException e) {
+            throw new RuntimeException();
+        }
+    	
+    	assert(thread.getState() == Thread.State.TERMINATED);
+        
+        Move move = id.currentBestMove;
+        assertEquals(2, move.column);
     }
     
     @Test
@@ -109,5 +148,40 @@ public class ID_DFSTest {
         ID_DFS id = new ID_DFS(p);
         
         assertEquals(Integer.MAX_VALUE, id.calcValue(board, Integer.MAX_VALUE, true, true, true));
+    }
+    
+    @Test
+    public void testinvalidmove() {
+        final BoardState bs = new BoardState(
+                "9 9 9 9 9 9 9",
+                "9 9 9 9 9 9 9",
+                "9 9 9 9 9 9 1",
+                "9 9 9 1 9 2 2",
+                "9 9 2 2 9 1 2",
+                "9 9 2 1 9 1 2");
+        PlayerState p = new PlayerState();
+        p.config = new Config("6 7 4 1 3");
+        
+        final ID_DFS id = new ID_DFS(p);
+        
+        Runnable searchForMove = new Runnable() {
+            @Override
+            public void run() {
+                id.iterativeDeepeningBestMove(bs, false, true);
+            }
+        };
+        Thread thread = new Thread(searchForMove);
+        thread.start();
+        
+        try {
+            thread.join(1000*p.config.timelimit - 100);
+        } catch (InterruptedException e) {
+            throw new RuntimeException();
+        }
+        
+        assert(thread.getState() == Thread.State.TERMINATED);
+        
+        Move move = id.currentBestMove;
+        assertEquals(Action.Place, move.action);
     }
 }

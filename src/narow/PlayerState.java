@@ -18,6 +18,8 @@ class PlayerState {
 	
 	ID_DFS search = new ID_DFS(this);
 	
+	Thread moveThread = new Thread();
+	
 	List<BoardState> bestPath;
 	
 	/**
@@ -36,10 +38,28 @@ class PlayerState {
 	 * We need to calculate until time runs out, then send the move
 	 * @throws IOException
 	 */
-	void makeMove() throws IOException {
-		Move move = search.findBestMove(bs, 9, true, !weUsedPopout, !theyUsedPopout);
-		System.out.println(move);
+	@SuppressWarnings("deprecation")
+    void makeMove() throws IOException {
+		Runnable searchForMove = new Runnable() {
+		    @Override
+		    public void run() {
+		        search.iterativeDeepeningBestMove(bs, !weUsedPopout, !theyUsedPopout);
+		    }
+		};
 		
+        Thread thread = new Thread(searchForMove);
+        thread.start();
+		try {
+            thread.join(1000*config.timelimit - 100); // 100ms breathing room
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+		
+		thread.interrupt();
+		thread.stop();
+		
+		Move move = search.currentBestMove;
+		System.out.println(move);
 		if (move.action == Action.PopOut) weUsedPopout = true;
 		bs = bs.nextBoard(move.column, move.action, Player.US);
 	}

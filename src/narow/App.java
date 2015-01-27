@@ -36,6 +36,7 @@ public class App {
 			    player.makeMove();
 			} else {
 			    // int result = Integer.parseInt(lineParts[0]);
+			    System.exit(0); // I think this should kill our threads too
 			    break;
 			}
 			

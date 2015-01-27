@@ -12,6 +12,17 @@ public class ID_DFS {
         this.ps = playerState;
     }
     
+    Move currentBestMove;
+    boolean abort = false;
+    
+    public Move iterativeDeepeningBestMove(BoardState bs, boolean canPopUs, boolean canPopThem) {
+        for (int i = 1; ; i+= 2) {
+            currentBestMove = findBestMove(bs, i, true, canPopUs, canPopThem);
+            if (currentBestMove.score == Integer.MAX_VALUE) return currentBestMove;
+            if (abort) return currentBestMove;
+        }
+    }
+    
     public Move findBestMove(BoardState bs, int depth, boolean isMaxLevel, boolean canPopUs, boolean canPopThem) {
     	Move bestMove = null;
     	int bestScore = isMaxLevel ? Integer.MIN_VALUE : Integer.MAX_VALUE;
@@ -30,6 +41,7 @@ public class ID_DFS {
                 if (isMaxLevel ? (next >= bestScore) : (next <= bestScore)) {
                     bestScore = next;
                     bestMove = new Move(i, Action.Place);
+                    bestMove.score = bestScore;
                 }
                 if (isMaxLevel ? (bestScore >= beta) : (bestScore <= alpha)) {
                     return bestMove;
@@ -67,7 +79,8 @@ public class ID_DFS {
     }
     
     public int calcValue(BoardState bs, int depth, boolean isMaxLevel, boolean canPopUs, boolean canPopThem, int alpha, int beta) {
-        int hval = bs.genHVal(ps.config, isMaxLevel);
+        //int hval = bs.genHVal(ps.config, isMaxLevel);
+        int hval = bs.countPossibleNARows(ps.config);
         if (depth == 0 || hval == Integer.MAX_VALUE || hval == Integer.MIN_VALUE) {
             return hval;
         }
@@ -85,7 +98,6 @@ public class ID_DFS {
                 if (isMaxLevel ? (next >= bestScore) : (next <= bestScore)) {
                     bestScore = next;
                 }
-                
                 
                 if (isMaxLevel ? (bestScore >= beta) : (bestScore <= alpha)) {
                     return bestScore;

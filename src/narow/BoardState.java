@@ -105,7 +105,7 @@ public class BoardState{
 	}
 	
 	public int genHVal(Config c, boolean isMaxLevel) {
-		int openruns = 0;
+		final int[][] narow = countNARows(c, Player.US); // we're always max
 		for (int h = 0; h<height; h++){
 		for (int w = 0; w<width-c.arow+1; w++){
 			if (!((board[w][h]||board[w+1][h]||board[w+2][h]||board[w+3][h]) == playerToMove));
@@ -115,18 +115,18 @@ public class BoardState{
 	}*/
 	
 	
-		final int[][] narow = traverse(c, Player.US); // we're always max
 		
 		if (narow[0][c.arow - 1] > 0 ^ narow[1][c.arow - 1] > 0) { // Exactly one winner
 	    	return ((narow[0][c.arow - 1] > 0) ? Integer.MAX_VALUE : Integer.MIN_VALUE);
+	    } else if (narow[0][c.arow - 1] > 0 && narow[1][c.arow - 1] > 0) { // Zero on tie
+	        return 0;
 	    }
 	   
 		int guess = 0;
 		
-		
-		for (int i = c.arow; i > 0; i--) {
-			int ourMult = isMaxLevel ? i : i+1;
-			int theirMult = isMaxLevel ? i+1 : i;
+		for (int i = c.arow - 1; i > 0; i--) {
+			int ourMult = isMaxLevel ? i : i*i;
+			int theirMult = isMaxLevel ? i*i : i;
 			
 			guess += (ourMult*ourMult*ourMult) * narow[0][i-1] * ((playerToMove == Player.US) ? 2 : 1);
 			guess -= (theirMult*theirMult*theirMult) * narow[1][i-1] * ((playerToMove == Player.THEM) ? 2 : 1);
@@ -135,13 +135,21 @@ public class BoardState{
 		return guess;
 	}
 	
+	
 	/**
-	 * Favor for player 1 is positive,
-	 * Favor for player 2 is negative
+	 * this goes through and counts how many possible N in a rows there are left.
+	 */
+	public int countPossibleNARows(Config c) {
+	    return new PossibleNARowsCalculator(c).calculate(this);
+	}
+	
+	
+	/**
+	 * This looks through and counts the number of active n in a rows, (1,2,3,...,n)
 	 * @param c
 	 * @return
 	 */
-	public int[][] traverse(Config c, int maxPlayer) {
+	public int[][] countNARows(Config c, int maxPlayer) {
 	    // horizontal, vertical, \, /
 	    int numInRow = 0;
 	    
