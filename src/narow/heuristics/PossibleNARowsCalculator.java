@@ -9,8 +9,8 @@
 package narow.heuristics;
 
 import narow.BoardState;
-import narow.state.Config;
-import narow.state.Player;
+import narow.formats.Config;
+import narow.formats.Player;
 
 /**
  * This eval function checks for the number of "open" n-in-a-row slots available to US.

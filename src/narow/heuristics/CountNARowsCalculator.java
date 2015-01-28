@@ -9,8 +9,8 @@
 package narow.heuristics;
 
 import narow.BoardState;
-import narow.state.Config;
-import narow.state.Player;
+import narow.formats.Config;
+import narow.formats.Player;
 
 /**
  * This evaluation function counts the number of 1,2,3,4,...,n in a rows that we have, and they have, and weighs them.

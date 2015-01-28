@@ -12,12 +12,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import narow.formats.Config;
+import narow.formats.Player;
 import narow.heuristics.CountNARowsCalculator;
 import narow.heuristics.CountNARowsCalculator2;
 import narow.heuristics.HVal2Calculator;
 import narow.heuristics.PossibleNARowsCalculator;
-import narow.state.Config;
-import narow.state.Player;
 
 
 public class App {

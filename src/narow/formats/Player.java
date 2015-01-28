@@ -6,7 +6,7 @@
  * Khazhismel Kumykov
  * 
  */
-package narow.state;
+package narow.formats;
 
 public class Player {
 	public static final int NONE = 0;

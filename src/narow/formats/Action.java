@@ -6,7 +6,7 @@
  * Khazhismel Kumykov
  * 
  */
-package narow.state;
+package narow.formats;
 
 public class Action {
     public static final int PopOut = 0;

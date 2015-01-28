@@ -16,7 +16,7 @@ How To Run:
 Source Layout:
 ===========================
 Packages:
-narow.state: includes some supporting, not logic things.
+narow.formats: includes info about the formats of referee communications and our data structures
 narow.heuristics: includes our evaluation functions
 narow includes: The core stuff
 

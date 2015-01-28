@@ -6,7 +6,7 @@
  * Khazhismel Kumykov
  * 
  */
-package narow.state;
+package narow.formats;
 
 public class Config {
 	public int width, height, arow, timelimit, playerGoesFirst;

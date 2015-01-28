@@ -6,7 +6,7 @@
  * Khazhismel Kumykov
  * 
  */
-package narow.state;
+package narow.formats;
 
 public class Move {
     public int column;

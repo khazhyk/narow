@@ -9,8 +9,8 @@
 package narow.heuristics;
 
 import narow.BoardState;
-import narow.state.Config;
-import narow.state.Player;
+import narow.formats.Config;
+import narow.formats.Player;
 
 /**
  * We used this to test various modifications to CountN

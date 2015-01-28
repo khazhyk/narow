@@ -8,10 +8,10 @@
  */
 package narow;
 
+import narow.formats.Action;
+import narow.formats.Move;
+import narow.formats.Player;
 import narow.heuristics.Heuristic;
-import narow.state.Action;
-import narow.state.Move;
-import narow.state.Player;
 
 /**
  * Iterative Deepening Depth-First Search, will return early if it finds a winning move, otherwise will search forever.

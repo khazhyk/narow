@@ -11,8 +11,8 @@ package narow;
 import java.util.ArrayList;
 import java.util.List;
 
-import narow.state.Action;
-import narow.state.Player;
+import narow.formats.Action;
+import narow.formats.Player;
 
 public class BoardState{
 	public int[][] board;

@@ -1,9 +1,9 @@
 package narow;
 
 import static org.junit.Assert.assertEquals;
+import narow.formats.Config;
 import narow.heuristics.HVal2Calculator;
 import narow.heuristics.Heuristic;
-import narow.state.Config;
 
 import org.junit.Test;
 

@@ -12,11 +12,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
+import narow.formats.Action;
+import narow.formats.Config;
+import narow.formats.Move;
+import narow.formats.Player;
 import narow.heuristics.Heuristic;
-import narow.state.Action;
-import narow.state.Config;
-import narow.state.Move;
-import narow.state.Player;
 
 class PlayerState {
 	
