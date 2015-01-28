@@ -3,7 +3,7 @@ package narow;
 public class Move {
     int column;
     int action;
-    int score;
+    long score;
     
     Move(int column, int action) {
         this.column = column; this.action = action;

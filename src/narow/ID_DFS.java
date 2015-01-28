@@ -29,16 +29,16 @@ public class ID_DFS {
     
     public Move findBestMove(Heuristic h, BoardState bs, int depth, boolean isMaxLevel, boolean canPopUs, boolean canPopThem) {
     	Move bestMove = null;
-    	int bestScore = isMaxLevel ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+    	long bestScore = isMaxLevel ? Integer.MIN_VALUE : Integer.MAX_VALUE;
     	
     	int playerToMove = isMaxLevel ? Player.US : Player.THEM;
     	boolean canPop = isMaxLevel ? canPopUs : canPopThem;
-    	int alpha = Integer.MIN_VALUE;
-    	int beta = Integer.MAX_VALUE;
+    	long alpha = Long.MIN_VALUE;
+    	long beta = Long.MAX_VALUE;
     	
     	for (int i = 0; i < bs.width; i++) {
             if (bs.board[0][i] == Player.NONE) {
-                int next = calcValue(h, bs.nextBoard(i, Action.Place, playerToMove),
+                long next = calcValue(h, bs.nextBoard(i, Action.Place, playerToMove),
                         depth - 1, !isMaxLevel, canPopUs, canPopThem);
                 if (isMaxLevel ? (next >= bestScore) : (next <= bestScore)) {
                     bestScore = next;
@@ -55,7 +55,7 @@ public class ID_DFS {
                 }
             }
             if (canPop && bs.board[bs.height - 1][i] == playerToMove) {
-                int next = calcValue(h, bs.nextBoard(i, Action.PopOut, playerToMove),
+                long next = calcValue(h, bs.nextBoard(i, Action.PopOut, playerToMove),
                         depth - 1, !isMaxLevel, isMaxLevel ? false : canPopUs, isMaxLevel ? canPopThem : false, alpha, beta);
                 if (isMaxLevel ? (next >= bestScore) : (next <= bestScore)) {
                     bestScore = next;
@@ -75,25 +75,27 @@ public class ID_DFS {
 		return bestMove;
     }
     
-    public int calcValue(Heuristic h, BoardState bs, int depth, boolean isMaxLevel, boolean canPopUs, boolean canPopThem) {
-        return calcValue(h, bs, depth, isMaxLevel, canPopUs, canPopThem, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    public long calcValue(Heuristic h, BoardState bs, int depth, boolean isMaxLevel, boolean canPopUs, boolean canPopThem) {
+        return calcValue(h, bs, depth, isMaxLevel, canPopUs, canPopThem, Long.MIN_VALUE, Long.MAX_VALUE);
     }
     
-    public int calcValue(Heuristic h, BoardState bs, int depth, boolean isMaxLevel, boolean canPopUs, boolean canPopThem, int alpha, int beta) {
+    public long calcValue(Heuristic h, BoardState bs, int depth, boolean isMaxLevel, boolean canPopUs, boolean canPopThem, long alpha, long beta) {
         //int hval = bs.genHVal(ps.config, isMaxLevel);
-        int hval = h.calculate(bs);
-        if (depth == 0 || hval == Integer.MAX_VALUE || hval == Integer.MIN_VALUE) {
-            return hval;
+        long hval = h.calculate(bs);
+        if (depth == 0 || hval == Integer.MAX_VALUE) {
+            return hval + depth;
+        } else if (hval == Integer.MIN_VALUE) {
+            return hval - depth;
         }
         
-        int bestScore = isMaxLevel ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+        long bestScore = isMaxLevel ? Integer.MIN_VALUE : Integer.MAX_VALUE;
         
         int playerToMove = isMaxLevel ? Player.US : Player.THEM; // We're always MAX
         boolean canPop = isMaxLevel ? canPopUs : canPopThem;
         
         for (int i = 0; i < bs.width; i++) {
             if (bs.board[0][i] == Player.NONE) {
-                int next = calcValue(h, bs.nextBoard(i, Action.Place, playerToMove),
+                long next = calcValue(h, bs.nextBoard(i, Action.Place, playerToMove),
                         depth - 1, !isMaxLevel, canPopUs, canPopThem, alpha, beta);
                 if (isMaxLevel ? (next >= bestScore) : (next <= bestScore)) {
                     bestScore = next;
@@ -109,7 +111,7 @@ public class ID_DFS {
                 }
             }
             if (canPop && bs.board[bs.height - 1][i] == playerToMove) {
-                int next = calcValue(h, bs.nextBoard(i, Action.PopOut, playerToMove),
+                long next = calcValue(h, bs.nextBoard(i, Action.PopOut, playerToMove),
                         depth - 1, !isMaxLevel, isMaxLevel ? false : canPopUs, isMaxLevel ? canPopThem : false, alpha, beta);
                 
                 if (isMaxLevel ? (next >= bestScore) : (next <= bestScore)) {
