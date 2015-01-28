@@ -2,6 +2,7 @@ package narow;
 
 import static org.junit.Assert.assertEquals;
 import narow.heuristics.CountNARowsCalculator;
+import narow.heuristics.HVal2Calculator;
 import narow.heuristics.Heuristic;
 import narow.state.Action;
 import narow.state.Config;
@@ -216,10 +217,11 @@ public class BoardStateTest {
    			 	"0 0 0 0 0",
                 "0 0 0 0 0",
                 "0 0 0 0 0",
-                "0 1 1 2 0"
+                "0 2 2 1 0"
                 );
     	
     	Config c = new Config("4 5 4 1 15");
-        assertEquals(12, board.genHVal2(c,2));
+    	Heuristic h = new HVal2Calculator(c);
+        assertEquals(12, h.calculate(board));
     }
 }

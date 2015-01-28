@@ -21,7 +21,7 @@ public class ID_DFSTest {
         ID_DFS id = new ID_DFS(p);
         final Heuristic h = new CountNARowsCalculator(p.config);
         
-        assertEquals(Integer.MAX_VALUE, id.calcValue(h, board, Integer.MAX_VALUE, true, true, true));
+        assertTrue(Integer.MAX_VALUE < id.calcValue(h, board, Integer.MAX_VALUE, true, true, true));
     }
     
     @Test
@@ -34,7 +34,7 @@ public class ID_DFSTest {
         ID_DFS id = new ID_DFS(p);
         final Heuristic h = new CountNARowsCalculator(p.config);
         
-        assertEquals(Integer.MAX_VALUE, id.calcValue(h, board, Integer.MAX_VALUE, true, true, true));
+        assertTrue(Integer.MAX_VALUE < id.calcValue(h, board, Integer.MAX_VALUE, true, true, true));
     }
     
     @Test
@@ -86,7 +86,7 @@ public class ID_DFSTest {
     	final Heuristic h = new CountNARowsCalculator(p.config);
         
     	//assertNotEquals(Integer.MAX_VALUE, bsb.genHVal(p.config, false));
-    	//assertEquals(Integer.MAX_VALUE, bsg.genHVal(p.config, false));
+    	//assertTrue(Integer.MAX_VALUE < bsg.genHVal(p.config, false));
         assertEquals(2, id.findBestMove(h, bs, 3, true, true, true).column);
 
         Runnable searchForMove = new Runnable() {
@@ -120,7 +120,7 @@ public class ID_DFSTest {
         ID_DFS id = new ID_DFS(p);
         final Heuristic h = new CountNARowsCalculator(p.config);
         
-        assertEquals(Integer.MAX_VALUE, id.calcValue(h, board, Integer.MAX_VALUE, true, true, true));
+        assertTrue(Integer.MAX_VALUE < id.calcValue(h, board, Integer.MAX_VALUE, true, true, true));
     }
     
     @Test
@@ -179,8 +179,8 @@ public class ID_DFSTest {
         assertEquals(Action.Place, move3.action);
         assertEquals(4, move3.column);
         
-        assertEquals(Integer.MIN_VALUE, id.calcValue(h, bs, 5, true, true, true)); // RIP :(
-        assertEquals(Integer.MIN_VALUE, id.calcValue(h, bs, 7, true, true, true));
+        assertTrue(Integer.MIN_VALUE > id.calcValue(h, bs, 5, true, true, true)); // RIP :(
+        assertTrue(Integer.MIN_VALUE > id.calcValue(h, bs, 7, true, true, true));
         
     }
     
@@ -201,8 +201,6 @@ public class ID_DFSTest {
         assertNotNull(id.findBestMove(h, bs, 1, true, true, true));
         assertNotNull(id.findBestMove(h, bs, 3, true, true, true));
         
-        if (true) return;
-        
         Runnable searchForMove = new Runnable() {
             @Override
             public void run() {
@@ -220,11 +218,7 @@ public class ID_DFSTest {
         
         assert(thread.getState() == Thread.State.TERMINATED);
         
-        //Move move = id.currentBestMove;
-        //assertEquals(Action.Place, move.action);
-        
-        assertNotNull(id.findBestMove(h, bs, 1, true, true, true));
-        
-
+        Move move = id.currentBestMove;
+        assertEquals(Action.Place, move.action);
     }
 }

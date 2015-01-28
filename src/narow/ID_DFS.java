@@ -4,26 +4,25 @@ import narow.heuristics.Heuristic;
 import narow.state.Action;
 import narow.state.Player;
 
+/**
+ * Iterative Deepening Depth-First Search, will return early if it finds a winning move, otherwise will search forever.
+ * Throw this in a thread and kill it when you time out.
+ * 
+ */
 public class ID_DFS {
 
     PlayerState ps;
-    
-    //BoardState bestMove;
-    
-    //Stack<BoardState> movesToCheck;
     
     public ID_DFS(PlayerState playerState) {
         this.ps = playerState;
     }
     
     Move currentBestMove;
-    boolean abort = false;
     
     public Move iterativeDeepeningBestMove(Heuristic h, BoardState bs, boolean canPopUs, boolean canPopThem) {
         for (int i = 1; ; i+= 2) {
             currentBestMove = findBestMove(h, bs, i, true, canPopUs, canPopThem); 
-            if (currentBestMove.score == Integer.MAX_VALUE) return currentBestMove;
-            if (abort) return currentBestMove;
+            if (currentBestMove.score >= Integer.MAX_VALUE) return currentBestMove; 
         }
     }
     
@@ -79,13 +78,18 @@ public class ID_DFS {
         return calcValue(h, bs, depth, isMaxLevel, canPopUs, canPopThem, Long.MIN_VALUE, Long.MAX_VALUE);
     }
     
+    /**
+     * Calculates score to given depth with provided heuristic. Has additional heuristic where it favors losing in more moves,
+     * in the case that all moves are losing. Against a perfect player, this will have no effect, but against a player
+     * that can make mistake, this gives us more breathing room.
+     */
     public long calcValue(Heuristic h, BoardState bs, int depth, boolean isMaxLevel, boolean canPopUs, boolean canPopThem, long alpha, long beta) {
         //int hval = bs.genHVal(ps.config, isMaxLevel);
         long hval = h.calculate(bs);
         if (depth == 0 || hval == Integer.MAX_VALUE) {
             return hval + depth;
         } else if (hval == Integer.MIN_VALUE) {
-            return hval - depth;
+            return hval - depth; // Favor losing later
         }
         
         long bestScore = isMaxLevel ? Long.MIN_VALUE : Long.MAX_VALUE;
