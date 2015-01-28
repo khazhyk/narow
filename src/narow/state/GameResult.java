@@ -6,7 +6,7 @@
  * Khazhismel Kumykov
  * 
  */
-package narow;
+package narow.state;
 
 public class GameResult {
     public static final int WON = -1;

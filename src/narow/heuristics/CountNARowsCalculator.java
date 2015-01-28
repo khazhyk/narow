@@ -15,7 +15,7 @@ import narow.state.Player;
 /**
  * This evaluation function counts the number of 1,2,3,4,...,n in a rows that we have, and they have, and weighs them.
  * Heavily favors longer combinations, and gives a heavy penalty for giving the opponent new moves. Takes into account 
- * who's turn it is when weighing. 
+ * who's turn it is when weighing, so it will assume the opponent will play in their own favor.
  *
  */
 public class CountNARowsCalculator implements Heuristic {
@@ -28,7 +28,7 @@ public class CountNARowsCalculator implements Heuristic {
     public int calculate(BoardState bs) {
         final int[][] narow = countNARows(bs);
         
-        boolean isMaxLevel = bs.playerToMove == Player.US;
+        boolean isOurTurn = bs.playerToMove == Player.US;
         
         if (narow[0][c.arow - 1] > 0 ^ narow[1][c.arow - 1] > 0) { // Exactly one winner
             return ((narow[0][c.arow - 1] > 0) ? Integer.MAX_VALUE : Integer.MIN_VALUE);
@@ -39,16 +39,21 @@ public class CountNARowsCalculator implements Heuristic {
         int guess = 0;
         
         for (int i = c.arow - 1; i > 0; i--) {
-            int ourMult = isMaxLevel ? i*i*i : i*i*i*i*i; // Overflows at i=74, hopefully you never ask us to find 74-in-a-row :)
-            int theirMult = isMaxLevel ? i*i*i*i*i : i*i*i;
+            int ourMult = isOurTurn ? i*i*i : i*i*i*i*i; // Overflows at i=74, hopefully you never ask us to find 74-in-a-row :)
+            int theirMult = isOurTurn ? i*i*i*i*i : i*i*i;
             
-            guess += ourMult * narow[0][i-1] * ((bs.playerToMove == Player.US) ? 2 : 1);
-            guess -= theirMult * narow[1][i-1] * ((bs.playerToMove == Player.THEM) ? 2 : 1);
+            guess += ourMult * narow[0][i-1] * ((isOurTurn) ? 2 : 1);
+            guess -= theirMult * narow[1][i-1] * ((!isOurTurn) ? 2 : 1);
         }
         
         return guess;
     }
     
+    /**
+     * This counts the number of 1,2,3,... n in a rows for both players (index 0 is US, index 1 is THEM)
+     * @param bs
+     * @return
+     */
     public int[][] countNARows(BoardState bs) {
         // horizontal, vertical, \, /
         int numInRow = 0;

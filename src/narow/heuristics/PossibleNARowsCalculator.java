@@ -132,6 +132,8 @@ public class PossibleNARowsCalculator implements Heuristic {
         lastP = piece;
         
         if (numInRow >= c.arow) availNInRow++;
+        
+        // Terminal test, check for n in a rows
         if (numActualInRow >= c.arow) {
             switch (piece) {
             case Player.US:

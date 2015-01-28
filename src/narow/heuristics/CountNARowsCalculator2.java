@@ -12,6 +12,10 @@ import narow.BoardState;
 import narow.state.Config;
 import narow.state.Player;
 
+/**
+ * We used this to test various modifications to CountN
+ *
+ */
 public class CountNARowsCalculator2 implements Heuristic {
 
     Config c;

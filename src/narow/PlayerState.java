@@ -15,6 +15,7 @@ import java.util.Random;
 import narow.heuristics.Heuristic;
 import narow.state.Action;
 import narow.state.Config;
+import narow.state.Move;
 import narow.state.Player;
 
 class PlayerState {

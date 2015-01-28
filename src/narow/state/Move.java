@@ -6,14 +6,14 @@
  * Khazhismel Kumykov
  * 
  */
-package narow;
+package narow.state;
 
 public class Move {
-    int column;
-    int action;
-    long score;
+    public int column;
+    public int action;
+    public long score;
     
-    Move(int column, int action) {
+    public Move(int column, int action) {
         this.column = column; this.action = action;
     }
     
