@@ -72,7 +72,7 @@ public class BoardState{
 	}
 
 	/**
-	 * Get the next board
+	 * Get the next board when a move (action) is made in a column by player
 	 * @param column
 	 * @param action
 	 * @param player
@@ -85,9 +85,8 @@ public class BoardState{
 		//System.err.println(this.height);
 		//System.err.println(action);
 		if (action == Action.Place) {
-			
+			//Place the token in the board at the lowest hight
 			if (this.board[this.height - 1][column] == Player.NONE) {
-				// System.err.print("yes");
 				if (player == Player.US) {
 					nextB.board[this.height - 1][column] = Player.US;
 				} else {
@@ -96,7 +95,6 @@ public class BoardState{
 			}
 			for (int i = 0; i < this.height - 1; i++) {
 				if (this.board[i + 1][column] != Player.NONE) {
-					// System.err.print("yes");
 					if (player == Player.US) {
 						nextB.board[i][column] = Player.US;
 					} else {
@@ -106,12 +104,14 @@ public class BoardState{
 				}
 			}
 		}
+		//If action is popout, move all tokens in that column down
 		else if (action == Action.PopOut){
 			for (int j = height-1; j > 0; j--){
 				nextB.board[j][column] = board[j-1][column];
 			}
 			nextB.board[0][column] = Player.NONE;
 		}
+		//return the next board
 		return nextB;
 	}
 	
@@ -120,8 +120,6 @@ public class BoardState{
 	 * @param c
 	 * @return
 	 */
-	
-	
 	
 	//test heuristic, counts the number of tokens in column 2
 	public Integer hval(){
