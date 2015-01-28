@@ -34,6 +34,17 @@ public class ID_DFS {
         }
     }
     
+/**
+ * finds the best move of the moves at the top of the tree of options    
+ * @param h heuristic to be used
+ * @param bs current board state
+ * @param depth how deep to check the tree
+ * @param isMaxLevel Boolean: True if its our turn (Max) False if its their turn (Min)
+ * @param canPopUs Can we still pop a token
+ * @param canPopThem Can they still pop a token
+ * @return bestMove available
+ */
+
     public Move findBestMove(Heuristic h, BoardState bs, int depth, boolean isMaxLevel, boolean canPopUs, boolean canPopThem) {
     	Move bestMove = null;
     	long bestScore = isMaxLevel ? Long.MIN_VALUE : Long.MAX_VALUE;
