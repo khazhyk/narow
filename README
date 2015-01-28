@@ -1,0 +1,24 @@
+CS4341 - Project 1 Games
+Professor Neil Heffernan
+Project Report
+===========================
+ * Lillian Walker
+ * Khazhismel Kumykov
+
+How To Run:
+java -jar <name_of_jar>
+
+
+
+Experiment:
+
+I was testing two different heuristics, CountNInRow, which counts how many 1,2,3, .. n in a rows there are, and weighs them, and PossibleNARows, which counts how many open NARows are left.
+
+I played these against each other and in 5 seconds didn't get domination, both won when going first. I noticed CountNInRow moves in the corner, then immediately removes it's corner piece when playing.
+I added a penalty for NInARows that only the opponent could take, in addition to counting open narows we could take, but it still did the placement and then removing it's corner piece thing, but now
+it also got dominated. So that change was a failure. :)
+
+I set up the project so you can test the different heuristics we have and see which one picks better moves.
+(java -jar player.jar [0,1,2]). CountN was 0, PossibleN is 1. Ran our own little tournament between our heuristics. We're pretty sure on our ID-DFS, minimax, and AB pruning, and any efficieny increases in there *might* help, but the heuristic is what we wanted to test because it has a huge role in the early game. 
+
+For each of our different evaluation functions we played them against each other and saw if they could get dominence, and how they won/lost/tied.

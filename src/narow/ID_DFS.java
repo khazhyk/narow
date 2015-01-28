@@ -1,3 +1,11 @@
+/**
+ * CS4341 - Project 1 Games
+ * Professor Neil Heffernan
+ * 
+ * Lillian Walker
+ * Khazhismel Kumykov
+ * 
+ */
 package narow;
 
 import narow.heuristics.Heuristic;
