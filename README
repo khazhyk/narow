@@ -11,15 +11,24 @@ java -jar <name_of_jar>
 
 
 Experiment:
+===========================
+We tested our different hueristics against each other in a little mini tournament. (In other testing we also testing modifications to heruistics in a similar manner)
+We set up the jar so you can specify a eval function to use and see which one picks better moves.
+(java -jar player.jar [0,1,2]). CountN was 0, PossibleN is 1, HVal2 is 2. We're pretty sure on our ID-DFS, minimax, and AB pruning, and any efficieny increases in there *might* help, but the heuristic is what we wanted to test because it has a huge role in the early game, and has the potentially highest effect.
 
-I was testing two different heuristics, CountNInRow, which counts how many 1,2,3, .. n in a rows there are, and weighs them, and PossibleNARows, which counts how many open NARows are left.
+The contenders:
+CountN: This counts the number of 1,2,3...,ns in a row for each player, then weighs them, giving longer rows cubicly more weight. It also takes into account who's turn it is when calculating the value.
+PossibleN: This counts the number of "possible" n in a rows left in the board available to us.
+HVal2: This counts the number of open rows/columns/diagaonals.
 
-I played these against each other and in 5 seconds didn't get domination, both won when going first. I noticed CountNInRow moves in the corner, then immediately removes it's corner piece when playing.
-I added a penalty for NInARows that only the opponent could take, in addition to counting open narows we could take, but it still did the placement and then removing it's corner piece thing, but now
-it also got dominated. So that change was a failure. :)
+The Results:
+Testing with 1 second timeout (so most placements are heuristic):
 
-I set up the project so you can test the different heuristics we have and see which one picks better moves.
-(java -jar player.jar [0,1,2]). CountN was 0, PossibleN is 1. Ran our own little tournament between our heuristics. We're pretty sure on our ID-DFS, minimax, and AB pruning, and any efficieny increases in there *might* help, but the heuristic is what we wanted to test because it has a huge role in the early game. 
+CountN dominates HVal2
+CountN dominates PossibleN
+PossibleN dominates HVal2
 
-For each of our different evaluation functions we played them against each other and saw if they could get dominence, and how they won/lost/tied. (For example "java -jar player.jar 0" vs "java -jar player.jar 1")
+Also noticed an intersting thing where PossibleN and HVal2 both tend to use their pop out really early? I guess since this is a side effect of the order we determine moves - since in their evaluations a piece for US and an empty space are equal, it finds that all moves are equal. Poping out the bottom right piece is the last move we test, so it makes sense that if all moves are found to be "equal" that is the move it picks.
+
+Outside of this little tournament, for each of our different evaluation functions and modifications we played them against each other and saw if they could get dominence, and how they won/lost/tied. (For example "java -jar player.jar 0" vs "java -jar player.jar 1"). An intersting thing we saw was that if a player knew they were going to lose (if the opponent played perfectly), it would give up and ended up always placing in the last possible move (all moves being equally bad, the last column is the last move we evaluate). We modified the evaluation just slightly to favor losing in more turns over losing immediately, in case the opposing player _doesn't_ play perfectly. Worst case scenario, we're exactly where we were before. Best case, we won when we shouldn't have. :)
 

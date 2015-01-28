@@ -45,7 +45,7 @@ public class App {
 		
         
         switch (heuristicToUse) {
-        default:
+        default: // By default, use the Calculator that performed best in tests.
         case 0:
             player.h = new CountNARowsCalculator(player.config);
             break;
