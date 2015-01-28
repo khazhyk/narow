@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import narow.state.Action;
-import narow.state.Config;
 import narow.state.Player;
 
 public class BoardState{
