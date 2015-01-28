@@ -21,4 +21,5 @@ it also got dominated. So that change was a failure. :)
 I set up the project so you can test the different heuristics we have and see which one picks better moves.
 (java -jar player.jar [0,1,2]). CountN was 0, PossibleN is 1. Ran our own little tournament between our heuristics. We're pretty sure on our ID-DFS, minimax, and AB pruning, and any efficieny increases in there *might* help, but the heuristic is what we wanted to test because it has a huge role in the early game. 
 
-For each of our different evaluation functions we played them against each other and saw if they could get dominence, and how they won/lost/tied.
+For each of our different evaluation functions we played them against each other and saw if they could get dominence, and how they won/lost/tied. (For example "java -jar player.jar 0" vs "java -jar player.jar 1")
+
