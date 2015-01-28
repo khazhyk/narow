@@ -21,7 +21,7 @@ import narow.heuristics.Heuristic;
 class PlayerState {
 	
 	Config config;
-	String playerName = "lwalker_kkumykov_" + Long.toHexString(new java.security.SecureRandom().nextLong());
+	String playerName = "lgwalker_kkumykov_" + Long.toHexString(new java.security.SecureRandom().nextLong());
 	Random random = new Random();
 	boolean arePlayerOne;
 	
