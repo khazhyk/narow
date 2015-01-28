@@ -12,6 +12,12 @@ import narow.BoardState;
 import narow.state.Config;
 import narow.state.Player;
 
+/**
+ * This evaluation function counts the number of 1,2,3,4,...,n in a rows that we have, and they have, and weighs them.
+ * Heavily favors longer combinations, and gives a heavy penalty for giving the opponent new moves. Takes into account 
+ * who's turn it is when weighing. 
+ *
+ */
 public class CountNARowsCalculator implements Heuristic {
 
     Config c;
@@ -33,11 +39,11 @@ public class CountNARowsCalculator implements Heuristic {
         int guess = 0;
         
         for (int i = c.arow - 1; i > 0; i--) {
-            int ourMult = isMaxLevel ? i : i*i;
-            int theirMult = isMaxLevel ? i*i : i;
+            int ourMult = isMaxLevel ? i*i*i : i*i*i*i*i; // Overflows at i=74, hopefully you never ask us to find 74-in-a-row :)
+            int theirMult = isMaxLevel ? i*i*i*i*i : i*i*i;
             
-            guess += (ourMult*ourMult*ourMult) * narow[0][i-1] * ((bs.playerToMove == Player.US) ? 2 : 1);
-            guess -= (theirMult*theirMult*theirMult) * narow[1][i-1] * ((bs.playerToMove == Player.THEM) ? 2 : 1);
+            guess += ourMult * narow[0][i-1] * ((bs.playerToMove == Player.US) ? 2 : 1);
+            guess -= theirMult * narow[1][i-1] * ((bs.playerToMove == Player.THEM) ? 2 : 1);
         }
         
         return guess;

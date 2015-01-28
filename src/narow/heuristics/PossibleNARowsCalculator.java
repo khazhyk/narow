@@ -12,6 +12,11 @@ import narow.BoardState;
 import narow.state.Config;
 import narow.state.Player;
 
+/**
+ * This eval function checks for the number of "open" n-in-a-row slots available to US.
+ * It also implements terminal checking inline so we only have to loop once through the board.
+ *
+ */
 public class PossibleNARowsCalculator implements Heuristic {
 
     Config c;
