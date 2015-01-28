@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import narow.heuristics.CountNARowsCalculator;
+import narow.heuristics.HVal2Calculator;
 import narow.heuristics.PossibleNARowsCalculator;
 import narow.state.Config;
 import narow.state.Player;
@@ -41,6 +42,10 @@ public class App {
             break;
         case 1:
             player.h = new PossibleNARowsCalculator(player.config);
+            break;
+        case 2:
+            player.h = new HVal2Calculator(player.config);
+            break;
         }
         
 		
