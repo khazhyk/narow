@@ -146,5 +146,38 @@ public class HVal2Test {
         assertEquals(Integer.MIN_VALUE, h.calculate(board));
     }
     
+    @Test
+    public void testGame9() {
+    	
+    	BoardState board = new BoardState(
+    			"2 1 0 0",
+                "2 1 0 0",
+                "2 1 2 0",
+                "2 1 1 2"
+                );
+    	
+        Config c = new Config("4 4 4 1 15");
+        
+        Heuristic h = new HVal2Calculator(c);
+        
+        assertEquals(0, h.calculate(board));
+    }
+    
+    @Test
+    public void testGame10() {
+    	
+    	BoardState board = new BoardState(
+    			"2 1 0 2",
+                "2 1 0 2",
+                "2 1 2 2",
+                "2 1 1 2"
+                );
+    	
+        Config c = new Config("4 4 4 1 15");
+        
+        Heuristic h = new HVal2Calculator(c);
+        
+        assertEquals(Integer.MIN_VALUE, h.calculate(board));
+    }
     
 }

@@ -20,6 +20,8 @@ public class HVal2Calculator implements Heuristic {
     @Override
     public int calculate(BoardState bs) {
         int openruns = 0;
+        int player1Wins = 0;
+        int player2Wins = 0;
         //open horizontal runs
         for (int h = 0; h<bs.height; h++){
         for (int w = 0; w<bs.width-c.arow+1; w++){
@@ -40,9 +42,9 @@ public class HVal2Calculator implements Heuristic {
                 openruns++;
             if (terminal){
             	if (lastPlayer == 1)
-            		return Integer.MAX_VALUE;
+            		player1Wins++;
             	if (lastPlayer == 2)
-            		return Integer.MIN_VALUE;
+            		player2Wins++;
             }
         }
         }
@@ -66,9 +68,9 @@ public class HVal2Calculator implements Heuristic {
                     openruns++;
                 if (terminal){
                 	if (lastPlayer == 1)
-                		return Integer.MAX_VALUE;
+                		player1Wins++;
                 	if (lastPlayer == 2)
-                		return Integer.MIN_VALUE;
+                		player2Wins++;
                 }
             }
         }
@@ -93,9 +95,9 @@ public class HVal2Calculator implements Heuristic {
                     openruns++;
                 if (terminal){
                 	if (lastPlayer == 1)
-                		return Integer.MAX_VALUE;
+                		player1Wins++;
                 	if (lastPlayer == 2)
-                		return Integer.MIN_VALUE;
+                		player2Wins++;
                 }
             }
         }
@@ -120,13 +122,19 @@ public class HVal2Calculator implements Heuristic {
                     openruns++;
                 if (terminal){
                 	if (lastPlayer == 1)
-                		return Integer.MAX_VALUE;
+                		player1Wins++;
                 	if (lastPlayer == 2)
-                		return Integer.MIN_VALUE;
+                		player2Wins++;
                 }
             }
         }
 
+        if (player1Wins == player2Wins && player1Wins > 0)
+        	return 0;
+        if (player1Wins > player2Wins)
+        	return Integer.MAX_VALUE;
+        if (player1Wins < player2Wins)
+        	return Integer.MIN_VALUE;
         return openruns;
     }
 
