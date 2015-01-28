@@ -36,8 +36,8 @@ public class CountNARowsCalculator2 implements Heuristic {
             int ourMult = isOurTurn ? i : i*i;
             int theirMult = isOurTurn ? i*i : i;
             
-            guess += (ourMult*ourMult*ourMult) * narow[0][i-1];// * ((isOurTurn) ? 2 : 1);
-            guess -= (theirMult*theirMult*theirMult) * narow[1][i-1];// * ((!isOurTurn) ? 2 : 1);
+            guess += (ourMult*ourMult*ourMult) * narow[0][i-1] * ((isOurTurn) ? 2 : 1);
+            guess -= (theirMult*theirMult*theirMult) * narow[1][i-1] * ((!isOurTurn) ? 2 : 1);
         }
         
         return guess;

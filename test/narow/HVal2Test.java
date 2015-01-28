@@ -1,12 +1,9 @@
 package narow;
 
 import static org.junit.Assert.assertEquals;
-import narow.heuristics.CountNARowsCalculator;
 import narow.heuristics.HVal2Calculator;
 import narow.heuristics.Heuristic;
-import narow.state.Action;
 import narow.state.Config;
-import narow.state.Player;
 
 import org.junit.Test;
 
