@@ -14,6 +14,7 @@ public class PossibleNARowsCalculator implements Heuristic {
             usActualNInRow,
             themActualNInRow,
             lastP,
+            lastNotEmptyP,
             numInRow,
             numActualInRow;
     
@@ -23,6 +24,7 @@ public class PossibleNARowsCalculator implements Heuristic {
         usActualNInRow = 0;
         themActualNInRow = 0;
         lastP = 0;
+        lastNotEmptyP = 0;
         numInRow = 0;
         numActualInRow = 0;
         
@@ -106,9 +108,11 @@ public class PossibleNARowsCalculator implements Heuristic {
             break;
         case Player.US:
             if (lastP == Player.NONE || lastP == Player.US) numInRow++;
+            else numInRow = 1;
             break;
         case Player.THEM:
-            numInRow = 0; // They're blocking us
+            if (lastP == Player.NONE || lastP == Player.THEM) numInRow++;
+            else numInRow = 1;
             break;
         }
         if (piece != Player.NONE) {
@@ -117,8 +121,16 @@ public class PossibleNARowsCalculator implements Heuristic {
         }
         
         lastP = piece;
+        if (lastP != Player.NONE) lastNotEmptyP = piece;
         
-        if (numInRow >= c.arow) availNInRow++;
+        if (numInRow >= c.arow + 1) availNInRow++;
+        else if (numInRow >= c.arow){
+            if (lastNotEmptyP == Player.US) {
+                availNInRow++;
+            } else if (lastNotEmptyP == Player.THEM) {
+                availNInRow--; // Penalty for 4 in row that only they can use.
+            }
+        }
         if (numActualInRow >= c.arow) {
             switch (piece) {
             case Player.US:
