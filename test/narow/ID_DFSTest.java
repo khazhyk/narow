@@ -1,6 +1,6 @@
 package narow;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import narow.heuristics.CountNARowsCalculator;
 import narow.heuristics.Heuristic;
 import narow.state.Action;
@@ -182,5 +182,49 @@ public class ID_DFSTest {
         assertEquals(Integer.MIN_VALUE, id.calcValue(h, bs, 5, true, true, true)); // RIP :(
         assertEquals(Integer.MIN_VALUE, id.calcValue(h, bs, 7, true, true, true));
         
+    }
+    
+    @Test
+    public void wrongArg() {
+        final BoardState bs = new BoardState(
+                "9 9 9 9 9 9 1",
+                "9 9 9 9 9 9 2",
+                "9 9 9 1 9 9 1",
+                "9 9 9 2 2 9 2",
+                "9 9 9 2 2 2 1",
+                "9 9 9 2 1 2 1");
+        PlayerState p = new PlayerState();
+        p.config = new Config("6 7 4 1 5");
+        
+        final ID_DFS id = new ID_DFS(p);
+        final Heuristic h = new CountNARowsCalculator(p.config);
+        assertNotNull(id.findBestMove(h, bs, 1, true, true, true));
+        assertNotNull(id.findBestMove(h, bs, 3, true, true, true));
+        
+        if (true) return;
+        
+        Runnable searchForMove = new Runnable() {
+            @Override
+            public void run() {
+                id.iterativeDeepeningBestMove(h, bs, false, true);
+            }
+        };
+        Thread thread = new Thread(searchForMove);
+        thread.start();
+        
+        try {
+            thread.join(1000*p.config.timelimit - 100);
+        } catch (InterruptedException e) {
+            throw new RuntimeException();
+        }
+        
+        assert(thread.getState() == Thread.State.TERMINATED);
+        
+        //Move move = id.currentBestMove;
+        //assertEquals(Action.Place, move.action);
+        
+        assertNotNull(id.findBestMove(h, bs, 1, true, true, true));
+        
+
     }
 }

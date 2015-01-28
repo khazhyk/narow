@@ -21,7 +21,7 @@ public class ID_DFS {
     
     public Move iterativeDeepeningBestMove(Heuristic h, BoardState bs, boolean canPopUs, boolean canPopThem) {
         for (int i = 1; ; i+= 2) {
-            currentBestMove = findBestMove(h, bs, i, true, canPopUs, canPopThem);
+            currentBestMove = findBestMove(h, bs, i, true, canPopUs, canPopThem); 
             if (currentBestMove.score == Integer.MAX_VALUE) return currentBestMove;
             if (abort) return currentBestMove;
         }
@@ -29,7 +29,7 @@ public class ID_DFS {
     
     public Move findBestMove(Heuristic h, BoardState bs, int depth, boolean isMaxLevel, boolean canPopUs, boolean canPopThem) {
     	Move bestMove = null;
-    	long bestScore = isMaxLevel ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+    	long bestScore = isMaxLevel ? Long.MIN_VALUE : Long.MAX_VALUE;
     	
     	int playerToMove = isMaxLevel ? Player.US : Player.THEM;
     	boolean canPop = isMaxLevel ? canPopUs : canPopThem;
@@ -88,7 +88,7 @@ public class ID_DFS {
             return hval - depth;
         }
         
-        long bestScore = isMaxLevel ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+        long bestScore = isMaxLevel ? Long.MIN_VALUE : Long.MAX_VALUE;
         
         int playerToMove = isMaxLevel ? Player.US : Player.THEM; // We're always MAX
         boolean canPop = isMaxLevel ? canPopUs : canPopThem;
