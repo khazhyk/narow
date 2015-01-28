@@ -24,13 +24,26 @@ public class HVal2Calculator implements Heuristic {
         for (int h = 0; h<bs.height; h++){
         for (int w = 0; w<bs.width-c.arow+1; w++){
             Boolean runIsClear = true;
+            Boolean terminal = true;
+            int lastPlayer = bs.board[h][w];
             for (int x = 0; x<c.arow; x++){
                 if (bs.board[h][w+x] != Player.US && bs.board[h][w+x] !=0){
                     runIsClear = false;
                 }   
+                if (bs.board[h][w+x]!=lastPlayer || lastPlayer==Player.NONE){
+                	lastPlayer = bs.board[h][w+x];
+                	terminal = false;
+                }
+                			
             }
             if (runIsClear)
                 openruns++;
+            if (terminal){
+            	if (lastPlayer == 1)
+            		return Integer.MAX_VALUE;
+            	if (lastPlayer == 2)
+            		return Integer.MIN_VALUE;
+            }
         }
         }
 
@@ -38,13 +51,25 @@ public class HVal2Calculator implements Heuristic {
         for (int h = 0; h < bs.height - c.arow + 1; h++) {
             for (int w = 0; w < bs.width; w++) {
                 Boolean runIsClear = true;
+                Boolean terminal = true;
+                int lastPlayer = bs.board[h][w];
                 for (int x = 0; x < c.arow; x++) {
                     if (bs.board[h + x][w] != Player.US && bs.board[h + x][w] != 0) {
                         runIsClear = false;
                     }
+                    if (bs.board[h + x][w]!=lastPlayer|| lastPlayer==Player.NONE){
+                    	lastPlayer = bs.board[h + x][w];
+                    	terminal = false;
+                    }
                 }
                 if (runIsClear)
                     openruns++;
+                if (terminal){
+                	if (lastPlayer == 1)
+                		return Integer.MAX_VALUE;
+                	if (lastPlayer == 2)
+                		return Integer.MIN_VALUE;
+                }
             }
         }
 
@@ -52,14 +77,26 @@ public class HVal2Calculator implements Heuristic {
         for (int w = 0; w < bs.width - c.arow + 1; w++) {
             for (int h = 0; h < bs.height - c.arow + 1; h++) {
                 Boolean runIsClear = true;
+                Boolean terminal = true;
+                int lastPlayer = bs.board[h][w];
                 for (int x = 0; x < c.arow; x++) {
                     if (bs.board[h + x][w + x] != Player.US
                             && bs.board[h + x][w + x] != 0) {
                         runIsClear = false;
                     }
+                    if (bs.board[h + x][w + x]!=lastPlayer|| lastPlayer==Player.NONE){
+                    	lastPlayer = bs.board[h + x][w + x];
+                    	terminal = false;
+                    }
                 }
                 if (runIsClear)
                     openruns++;
+                if (terminal){
+                	if (lastPlayer == 1)
+                		return Integer.MAX_VALUE;
+                	if (lastPlayer == 2)
+                		return Integer.MIN_VALUE;
+                }
             }
         }
 
@@ -67,14 +104,26 @@ public class HVal2Calculator implements Heuristic {
         for (int w = c.arow-1; w < bs.width; w++) {
             for (int h = 0; h < bs.height - c.arow + 1; h++) {
                 Boolean runIsClear = true;
+                Boolean terminal = true;
+                int lastPlayer = bs.board[h][w];
                 for (int x = 0; x < c.arow; x++) {
                     if (bs.board[h + x][w - x] != Player.US
                             && bs.board[h + x][w - x] != 0) {
                         runIsClear = false;
                     }
+                    if (bs.board[h + x][w - x]!=lastPlayer|| lastPlayer==Player.NONE){
+                    	lastPlayer = bs.board[h + x][w - x];
+                    	terminal = false;
+                    }
                 }
                 if (runIsClear)
                     openruns++;
+                if (terminal){
+                	if (lastPlayer == 1)
+                		return Integer.MAX_VALUE;
+                	if (lastPlayer == 2)
+                		return Integer.MIN_VALUE;
+                }
             }
         }
 
